@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from app.models import CandidateProfile, Job
 from app.database import add_job, get_candidate_profile, get_jobs, initialize_database
@@ -6,6 +7,8 @@ from app.matching import get_matching_jobs
 
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 templates = Jinja2Templates(directory="app/templates")
 

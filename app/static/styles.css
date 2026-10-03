@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 40px;
+}
+
+.page-header {
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+}
+
+.page-header h1 {
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    margin-top: 0;
+    color: #555;
+}
+
+.job-list {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.job-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.job-card h2 {
+    margin-top: 0;
+}
+
+.company {
+    font-weight: bold;
+}
+
+.location {
+    color: #555;
+}
+
+.source {
+    color: #777;
+    font-size: 14px;
+}
+
+.job-link {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+}

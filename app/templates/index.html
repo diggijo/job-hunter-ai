@@ -2,29 +2,42 @@
 <html>
 <head>
     <title>Job Hunter AI</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
 
-    <h1>Job Hunter AI</h1>
+    <div class="page-header">
+        <h1>Job Hunter AI</h1>
+        <p>{{ matching_jobs|length }} potential jobs found</p>
+    </div>
 
-    <p>{{ matching_jobs|length }} potential jobs found</p>
+    <div class="job-list">
+        {% for job in matching_jobs %}
+            <div class="job-card">
 
-    {% for job in matching_jobs %}
-        <div>
-            <h3>{{ job["title"] }}</h3>
+                <h2>{{ job["title"] }}</h2>
 
-            <p>
-                {{ job["company"] }} -
-                {{ job["location"] }}
-            </p>
+                <p class="company">
+                    {{ job["company"] }}
+                </p>
 
-            <a href="{{ job['url'] }}" target="_blank">
-                View Job
-            </a>
-        </div>
+                <p class="location">
+                    {{ job["location"] }}
+                </p>
 
-        <hr>
-    {% endfor %}
+                <p class="source">
+                    Source: {{ job["source"] }}
+                </p>
+
+                <a class="job-link"
+                href="{{ job['url'] }}"
+                target="_blank">
+                    View Job
+                </a>
+
+            </div>
+        {% endfor %}
+    </div>
 
 </body>
 </html>
