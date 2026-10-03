@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Hunter AI</title>
+</head>
+<body>
+
+    <h1>Job Hunter AI</h1>
+
+    <p>{{ matching_jobs|length }} potential jobs found</p>
+
+    {% for job in matching_jobs %}
+        <div>
+            <h3>{{ job["title"] }}</h3>
+
+            <p>
+                {{ job["company"] }} -
+                {{ job["location"] }}
+            </p>
+
+            <a href="{{ job['url'] }}" target="_blank">
+                View Job
+            </a>
+        </div>
+
+        <hr>
+    {% endfor %}
+
+</body>
+</html>
