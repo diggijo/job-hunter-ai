@@ -1,6 +1,6 @@
-from fastapi import FastAPI
-from app.models import CandidateProfile
-from app.database import get_candidate_profile, initialize_database
+from fastapi import FastAPI, HTTPException
+from app.models import CandidateProfile, Job
+from app.database import add_job, get_candidate_profile, get_jobs, initialize_database
 
 
 app = FastAPI()
@@ -16,3 +16,20 @@ def home():
 @app.get("/profile", response_model=CandidateProfile)
 def get_profile():
     return get_candidate_profile()
+
+@app.post("/jobs")
+def create_job(job: Job):
+    added = add_job(job)
+
+    if not added:
+        raise HTTPException(
+            status_code=409,
+            detail="Job with this URL already exists."
+        )
+    
+    return {"message": "Job added successfully!"}
+
+
+@app.get("/jobs")
+def list_jobs():
+    return get_jobs()
