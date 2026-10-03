@@ -19,6 +19,31 @@ body {
     color: #555;
 }
 
+.filters {
+    display: flex;
+    gap: 10px;
+    max-width: 900px;
+    margin: 0 auto 20px auto;
+}
+
+#job-search {
+    flex: 1;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#location-filter,
+#sort-jobs {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+}
+
 .job-list {
     max-width: 900px;
     margin: 0 auto;

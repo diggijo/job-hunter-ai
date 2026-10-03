@@ -8,7 +8,32 @@
 
     <div class="page-header">
         <h1>Job Hunter AI</h1>
-        <p>{{ matching_jobs|length }} potential jobs found</p>
+        <p>
+            <span id="job-count">{{ matching_jobs|length }}</span>
+            potential jobs found
+        </p>
+    </div>
+
+    <div class="filters">
+        <input
+            type="text"
+            id="job-search"
+            placeholder="Search jobs..."
+        >
+
+        <select id="location-filter">
+            <option value="">All Locations</option>
+            <option value="ireland">Ireland</option>
+            <option value="london">London</option>
+            <option value="new york">New York</option>
+            <option value="remote">Remote</option>
+        </select>
+
+        <select id="sort-jobs">
+            <option value="default">Default Order</option>
+            <option value="title">Job Title A-Z</option>
+            <option value="company">Company A-Z</option>
+        </select>
     </div>
 
     <div class="job-list">
@@ -39,5 +64,6 @@
         {% endfor %}
     </div>
 
+<script src="/static/js/search.js"></script>
 </body>
 </html>
