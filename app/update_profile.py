@@ -17,6 +17,8 @@ connection.execute(
 roles = [
     "software",
     "game",
+    "games",
+    "gameplay",
     "machine",
     "unity",
     "graduate"

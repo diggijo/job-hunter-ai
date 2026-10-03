@@ -1,8 +1,13 @@
+import re
+
+
 def title_matches(job_title, preferred_roles):
     job_title = job_title.lower()
 
     for role in preferred_roles:
-        if role.lower() in job_title:
+        pattern = rf"\b{re.escape(role.lower())}\b"
+
+        if re.search(pattern, job_title):
             return True
 
     return False
