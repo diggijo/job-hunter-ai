@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Job Hunter AI</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
 
@@ -37,7 +37,8 @@
     </div>
 
     <div class="job-list">
-        {% for job in matching_jobs %}
+        {% for match in matching_jobs %}
+        {% set job = match["job"] %}
             <div class="job-card">
 
                 <h2>{{ job["title"] }}</h2>
@@ -49,6 +50,16 @@
                 <p class="location">
                     {{ job["location"] }}
                 </p>
+
+                <p class="score">
+                    Match Score: {{ match["score"] }}
+                </p>
+
+                <ul class="match-reasons">
+                    {% for reason in match["reasons"] %}
+                        <li>{{ reason }}</li>
+                    {% endfor %}
+                </ul>
 
                 <p class="source">
                     Source: {{ job["source"] }}
