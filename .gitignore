@@ -186,3 +186,6 @@ data/*.db
 # Candidate Documents
 candidate/*
 !candidate/.gitkeep
+
+# Environment Variables
+.env
