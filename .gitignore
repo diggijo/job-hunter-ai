@@ -182,3 +182,7 @@ cython_debug/
 
 # Local Database
 data/*.db
+
+# Candidate Documents
+candidate/*
+!candidate/.gitkeep
