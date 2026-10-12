@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class CandidateProfile(BaseModel):
@@ -15,9 +15,17 @@ class Job(BaseModel):
     url: str
     source: str
 
+
 class CandidateAnalysis(BaseModel):
     professional_summary: str
     technical_skills: list[str]
     experience_areas: list[str]
     suitable_roles: list[str]
     seniority: str
+
+
+class JobMatchAnalysis(BaseModel):
+    score: int = Field(ge=0, le=100)
+    strengths: list[str]
+    gaps: list[str]
+    explanation: str

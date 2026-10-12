@@ -1,5 +1,5 @@
 import sqlite3
-from app.models import Job
+from app.models import Job, CandidateAnalysis, CandidateProfile, JobMatchAnalysis
 
 
 def initialize_database():
@@ -41,6 +41,30 @@ def initialize_database():
             source TEXT NOT NULL
         )
     """)
+
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS candidate_analysis (
+            id INTEGER PRIMARY KEY,
+            candidate_id INTEGER NOT NULL UNIQUE,
+            analysis_json TEXT NOT NULL,
+            FOREIGN KEY (candidate_id)
+                REFERENCES candidate_profile (id)
+        )
+    """)
+
+    connection.execute("""
+    CREATE TABLE IF NOT EXISTS job_match_analysis (
+        id INTEGER PRIMARY KEY,
+        candidate_id INTEGER NOT NULL,
+        job_id INTEGER NOT NULL,
+        analysis_json TEXT NOT NULL,
+        UNIQUE(candidate_id, job_id),
+        FOREIGN KEY (candidate_id)
+            REFERENCES candidate_profile (id),
+        FOREIGN KEY (job_id)
+            REFERENCES jobs (id)
+    )
+""")
 
     connection.close()
 
@@ -122,3 +146,104 @@ def get_jobs():
     connection.close()
 
     return results
+
+
+def get_candidate_analysis(candidate_id: int) -> CandidateAnalysis | None:
+    connection = sqlite3.connect("data/jobhunter.db")
+    connection.row_factory = sqlite3.Row
+
+    try:
+        cursor = connection.execute("""
+            SELECT analysis_json
+            FROM candidate_analysis
+            WHERE candidate_id = ?
+        """, (candidate_id,))
+
+        row = cursor.fetchone()
+
+        if row is None:
+            return None
+
+        return CandidateAnalysis.model_validate_json(
+            row["analysis_json"]
+        )
+
+    finally:
+        connection.close()
+
+
+def save_candidate_analysis(candidate_id: int, analysis: CandidateAnalysis):
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    try:
+        connection.execute("""
+            INSERT INTO candidate_analysis (
+                candidate_id,
+                analysis_json
+            )
+            VALUES (?, ?)
+            ON CONFLICT(candidate_id)
+            DO UPDATE SET
+                analysis_json = excluded.analysis_json
+        """, (
+            candidate_id,
+            analysis.model_dump_json()
+        ))
+
+        connection.commit()
+
+    finally:
+        connection.close()
+
+
+def save_job_match_analysis(candidate_id: int, job_id: int, analysis: JobMatchAnalysis):
+
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    try:
+        connection.execute("""
+            INSERT INTO job_match_analysis (
+                candidate_id,
+                job_id,
+                analysis_json
+            )
+            VALUES (?, ?, ?)
+            ON CONFLICT(candidate_id, job_id)
+            DO UPDATE SET
+                analysis_json = excluded.analysis_json
+        """, (
+            candidate_id,
+            job_id,
+            analysis.model_dump_json()
+        ))
+
+        connection.commit()
+
+    finally:
+        connection.close()
+
+
+def get_job_match_analysis(candidate_id: int, job_id: int) -> JobMatchAnalysis | None:
+
+    connection = sqlite3.connect("data/jobhunter.db")
+    connection.row_factory = sqlite3.Row
+
+    try:
+        cursor = connection.execute("""
+            SELECT analysis_json
+            FROM job_match_analysis
+            WHERE candidate_id = ?
+              AND job_id = ?
+        """, (candidate_id, job_id))
+
+        row = cursor.fetchone()
+
+        if row is None:
+            return None
+
+        return JobMatchAnalysis.model_validate_json(
+            row["analysis_json"]
+        )
+
+    finally:
+        connection.close()
