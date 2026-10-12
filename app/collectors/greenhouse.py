@@ -7,7 +7,7 @@ from app.utils import html_to_text
 def get_greenhouse_jobs(board_token):
     url = f"https://boards-api.greenhouse.io/v1/boards/{board_token}/jobs?content=true"
 
-    response = httpx.get(url)
+    response = httpx.get(url, timeout=15.0)
     response.raise_for_status()
 
     data = response.json()

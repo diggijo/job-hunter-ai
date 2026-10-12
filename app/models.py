@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from typing import Literal
 
 
 class CandidateProfile(BaseModel):
@@ -22,10 +23,14 @@ class CandidateAnalysis(BaseModel):
     experience_areas: list[str]
     suitable_roles: list[str]
     seniority: str
+    education: list[str]
+    graduation_year: int | None
 
 
 class JobMatchAnalysis(BaseModel):
     score: int = Field(ge=0, le=100)
+    eligibility: Literal["eligible", "ineligible", "unknown"]
+    eligibility_reasons: list[str]
     strengths: list[str]
     gaps: list[str]
     explanation: str
