@@ -1,7 +1,12 @@
 from app.ai_matching import evaluate_jobs_with_ai
 
 
-results = evaluate_jobs_with_ai(candidate_id=1, limit=5, max_evaluations=10, max_api_calls=2)
+results = evaluate_jobs_with_ai(
+    candidate_id=1,
+    limit=10,
+    max_evaluations=3,
+    max_api_calls=3
+)
 
 print("\nAI Job Matching Results\n")
 

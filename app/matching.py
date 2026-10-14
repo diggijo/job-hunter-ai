@@ -1,31 +1,33 @@
 import re
+from app.config import TARGET_LOCATIONS
+from app.job_filters import is_technical_role
 
 
-def title_matches(job_title, preferred_roles):
-    job_title = job_title.lower()
+def title_matches(title: str, preferred_roles=None) -> bool:
+    return is_technical_role(title)
 
-    for role in preferred_roles:
-        pattern = rf"\b{re.escape(role.lower())}\b"
 
-        if re.search(pattern, job_title):
+def location_matches(job_location, preferred_locations=None):
+    location = job_location.lower().strip()
+
+    for target in TARGET_LOCATIONS:
+        target = target.lower()
+
+        if target == "dublin" and "dublin" in location:
             return True
 
-    return False
+        if target == "london" and "london" in location:
+            return True
 
+        if target == "uk (remote)":
+            if "remote" in location and (
+                "united kingdom" in location
+                or re.search(r"\buk\b", location)
+            ):
+                return True
 
-def location_matches(job_location, preferred_locations):
-    job_location = job_location.lower()
-
-    for preferred_location in preferred_locations:
-        preferred_location = preferred_location.lower()
-
-        locations = LOCATION_ALIASES.get(
-            preferred_location,
-            [preferred_location]
-        )
-    
-        for location in locations:
-            if location.lower() in job_location:
+        if target == "ireland (remote)":
+            if "remote" in location and "ireland" in location:
                 return True
 
     return False
@@ -59,69 +61,13 @@ def get_matching_jobs(jobs, profile):
     return matching_jobs
 
 
-LOCATION_ALIASES = {
-    "ireland": [
-        "ireland",
-        "dublin",
-        "cork",
-        "galway",
-        "limerick"
-    ],
-    "new york": [
-        "new york",
-        "nyc"
-    ],
-    "london": [
-        "london"
-    ],
-    "remote": [
-        "remote"
-    ]
-}
-
-SENIORITY_PENALTIES = {
-    "senior": 20,
-    "staff": 30,
-    "principal": 40,
-    "lead": 30,
-    "director": 50
-}
-
-EARLY_CAREER_BONUSES = {
-    "graduate": 20,
-    "junior": 15,
-    "entry": 15,
-    "intern": 10
-}
-
 def calculate_job_score(job, profile):
-    score = 0
     reasons = []
 
-    if title_matches(
-        job["title"],
-        profile["preferred_roles"]
-    ):
-        score += 50
+    if title_matches(job["title"], profile["preferred_roles"]):
         reasons.append("Preferred role match")
 
-    if location_matches(
-        job["location"],
-        profile["preferred_locations"]
-    ):
-        score += 50
+    if location_matches(job["location"], profile["preferred_locations"]):
         reasons.append("Preferred location match")
 
-    job_title = job["title"].lower()
-
-    for seniority, penalty in SENIORITY_PENALTIES.items():
-        if seniority in job_title:
-            score -= penalty
-            reasons.append(f"{seniority.title()} level role")
-
-    for career_level, bonus in EARLY_CAREER_BONUSES.items():
-        if career_level in job_title:
-            score += bonus
-            reasons.append(f"{career_level.title()} role")
-
-    return score, reasons
+    return 0, reasons

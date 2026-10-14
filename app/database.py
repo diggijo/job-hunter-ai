@@ -1,6 +1,7 @@
 import sqlite3
 from app.config import JOB_MATCH_CACHE_VERSION
 from app.models import Job, CandidateAnalysis, CandidateProfile, JobMatchAnalysis
+from datetime import datetime, timezone, timedelta
 from pydantic import ValidationError
 
 
@@ -45,6 +46,15 @@ def initialize_database():
     """)
 
     connection.execute("""
+        CREATE TABLE IF NOT EXISTS greenhouse_boards (
+            id INTEGER PRIMARY KEY,
+            board_token TEXT NOT NULL UNIQUE,
+            company_name TEXT,
+            discovered_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS candidate_analysis (
             id INTEGER PRIMARY KEY,
             candidate_id INTEGER NOT NULL UNIQUE,
@@ -68,6 +78,23 @@ def initialize_database():
         )
     """)
 
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS ai_api_usage (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            model TEXT NOT NULL,
+            request_date TEXT NOT NULL,
+            request_count INTEGER NOT NULL DEFAULT 0,
+            UNIQUE(model, request_date)
+        )
+    """)
+
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS ai_request_timing (
+            model TEXT PRIMARY KEY,
+            last_request_at TEXT NOT NULL
+        )
+    """)
+
     columns = connection.execute(
         "PRAGMA table_info(job_match_analysis)"
     ).fetchall()
@@ -80,6 +107,7 @@ def initialize_database():
             ADD COLUMN cache_version INTEGER NOT NULL DEFAULT 1
         """)
 
+    connection.commit()
     connection.close()
 
 
@@ -323,3 +351,142 @@ def get_job_match_analysis(candidate_id: int, job_id: int) -> JobMatchAnalysis |
 
     finally:
         connection.close()
+
+
+def add_greenhouse_board(board_token: str, company_name: str = None):
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    cursor = connection.execute(
+        """
+        INSERT OR IGNORE INTO greenhouse_boards
+        (board_token, company_name)
+        VALUES (?, ?)
+        """,
+        (board_token, company_name)
+    )
+
+    connection.commit()
+
+    added = cursor.rowcount > 0
+
+    connection.close()
+
+    return added
+
+
+def get_greenhouse_boards():
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    rows = connection.execute(
+        """
+        SELECT board_token
+        FROM greenhouse_boards
+        ORDER BY board_token
+        """
+    ).fetchall()
+
+    connection.close()
+
+    return [row[0] for row in rows]
+
+
+def get_daily_ai_usage(model: str) -> int:
+    # Gemini daily quotas reset at midnight Pacific Time.
+    # This is 08:00 or 09:00 in Ireland depending on DST.
+    pacific = timezone(timedelta(hours=-8))
+    # Use America/Los_Angeles to handle daylight saving time.
+    from zoneinfo import ZoneInfo
+
+    request_date = datetime.now(
+        ZoneInfo("America/Los_Angeles")
+    ).date().isoformat()
+
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    try:
+        row = connection.execute(
+            """
+            SELECT request_count
+            FROM ai_api_usage
+            WHERE model = ? AND request_date = ?
+            """,
+            (model, request_date)
+        ).fetchone()
+
+        return row[0] if row else 0
+    finally:
+        connection.close()
+
+
+def record_ai_api_request(model: str) -> int:
+    from zoneinfo import ZoneInfo
+
+    request_date = datetime.now(
+        ZoneInfo("America/Los_Angeles")
+    ).date().isoformat()
+
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    try:
+        connection.execute(
+            """
+            INSERT INTO ai_api_usage (
+                model, request_date, request_count
+            )
+            VALUES (?, ?, 1)
+            ON CONFLICT(model, request_date)
+            DO UPDATE SET
+                request_count = request_count + 1
+            """,
+            (model, request_date)
+        )
+
+        connection.commit()
+
+        row = connection.execute(
+            """
+            SELECT request_count
+            FROM ai_api_usage
+            WHERE model = ? AND request_date = ?
+            """,
+            (model, request_date)
+        ).fetchone()
+
+        return row[0]
+    finally:
+        connection.close()
+
+
+
+def get_last_ai_request_time(model: str):
+    connection = sqlite3.connect("data/jobhunter.db")
+    try:
+        row = connection.execute(
+            "SELECT last_request_at FROM ai_request_timing WHERE model = ?",
+            (model,)
+        ).fetchone()
+
+        return datetime.fromisoformat(row[0]) if row else None
+    finally:
+        connection.close()
+
+
+def record_ai_request_time(model: str):
+    request_time = datetime.now(timezone.utc)
+
+    connection = sqlite3.connect("data/jobhunter.db")
+    try:
+        connection.execute(
+            """
+            INSERT INTO ai_request_timing (model, last_request_at)
+            VALUES (?, ?)
+            ON CONFLICT(model)
+            DO UPDATE SET last_request_at = excluded.last_request_at
+            """,
+            (model, request_time.isoformat())
+        )
+        connection.commit()
+    finally:
+        connection.close()
+
+    return request_time

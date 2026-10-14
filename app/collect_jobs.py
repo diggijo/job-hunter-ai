@@ -1,23 +1,31 @@
+import sys
+import time
 from app.collectors.greenhouse import get_greenhouse_jobs
-from app.database import add_job
+from app.database import add_job, get_greenhouse_boards
 
-
-greenhouse_boards = [
-    "boxinc",
-    "anthropic",
-    "vercel",
-    "neo4j",
-    "drweng",
-    "virtu"
-    ]
 
 added_count = 0
 updated_count = 0
 unchanged_count = 0
 found_count = 0
 
-for board_token in greenhouse_boards:
+boards = get_greenhouse_boards()
+
+batch_size = 25
+batch_number = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+
+start = batch_number * batch_size
+end = start + batch_size
+
+boards_to_collect = boards[start:end]
+
+print(f"Batch number: {batch_number}")
+print(f"Collecting boards {start + 1} to {min(end, len(boards))} of {len(boards)}")
+
+for board_token in boards_to_collect:
     jobs = get_greenhouse_jobs(board_token)
+
+    time.sleep(1)
 
     found_count += len(jobs)
 

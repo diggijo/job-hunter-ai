@@ -8,7 +8,12 @@ from google.genai import types
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GENAI_API_KEY"))
+client = genai.Client(
+    api_key=os.getenv("GENAI_API_KEY"),
+    http_options=types.HttpOptions(
+        retry_options=types.HttpRetryOptions(attempts=1)
+    )
+)
 
 
 def analyse_cv(cv_text: str) -> CandidateAnalysis:
