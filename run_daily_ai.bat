@@ -6,7 +6,7 @@ if not exist "logs" mkdir "logs"
 echo. >> "logs\daily_ai.log"
 echo ===== Daily job collection started: %date% %time% ===== >> "logs\daily_ai.log"
 
-".venv\Scripts\python.exe" -m app.collect_all_jobs >> "logs\daily_ai.log" 2>&1
+".venv\Scripts\python.exe" -m app.run_full_collection >> "logs\daily_ai.log" 2>&1
 
 if errorlevel 1 (
     echo Greenhouse collection failed. Skipping Gemini. >> "logs\daily_ai.log"

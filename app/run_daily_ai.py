@@ -1,4 +1,4 @@
-from app.ai_matching import run_locked_ai_evaluation
+from app.ai_job_evaluation import run_locked_ai_evaluation
 from app.config import DAILY_AI_LIMIT
 import argparse
 

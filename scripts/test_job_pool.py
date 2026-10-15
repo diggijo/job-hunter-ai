@@ -1,7 +1,7 @@
 from collections import Counter
 from app.database import get_jobs, get_candidate_profile
-from app.matching import get_matching_jobs
-from app.ai_matching import meets_experience_requirement
+from app.job_matching import get_matching_jobs
+from app.ai_job_evaluation import meets_experience_requirement
 from app.config import EXCLUDED_JOB_KEYWORDS
 from app.job_filters import get_job_priority
 

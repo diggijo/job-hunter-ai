@@ -1,4 +1,4 @@
-from app.ai_matching import meets_experience_requirement
+from app.ai_job_evaluation import meets_experience_requirement
 
 
 def test_experience_filter():

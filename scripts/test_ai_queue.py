@@ -1,4 +1,4 @@
-from app.ai_matching import get_jobs_for_ai_analysis
+from app.ai_job_evaluation import get_jobs_for_ai_analysis
 from app.database import get_job_match_analysis
 
 

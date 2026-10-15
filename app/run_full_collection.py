@@ -48,7 +48,7 @@ for batch_number in range(start_batch, total_batches):
         [
             sys.executable,
             "-m",
-            "app.collect_jobs",
+            "app.collect_job_batch",
             str(batch_number)
         ],
         check=False

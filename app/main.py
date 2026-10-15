@@ -1,7 +1,7 @@
 from app.config import EXCLUDED_JOB_KEYWORDS
-from app.ai_matching import meets_experience_requirement
+from app.ai_job_evaluation import meets_experience_requirement
 from app.database import add_job, get_candidate_profile, get_jobs, initialize_database, get_job_match_analysis, get_application_statuses, save_application_status, get_application_dates
-from app.matching import get_matching_jobs
+from app.job_matching import get_matching_jobs
 from app.models import CandidateProfile, Job
 from fastapi import FastAPI, HTTPException, Request, Body
 from fastapi.staticfiles import StaticFiles

@@ -2,7 +2,7 @@ from app.ai_service import analyse_job_match
 from app.config import EXCLUDED_JOB_KEYWORDS, PREFERRED_JOB_KEYWORDS, EXPERIENCE_NUMBER_WORDS, MAX_REQUIRED_EXPERIENCE, GEMINI_MODEL, DAILY_AI_LIMIT, GEMINI_REQUEST_DELAY
 from app.database import get_jobs, get_candidate_profile, get_candidate_analysis, get_job_match_analysis, save_job_match_analysis, get_daily_ai_usage, record_ai_api_request, get_last_ai_request_time, record_ai_request_time, get_application_statuses
 from app.job_filters import get_job_priority
-from app.matching import get_matching_jobs, location_matches
+from app.job_matching import get_matching_jobs, location_matches
 from app.models import Job
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -17,7 +17,7 @@ def meets_experience_requirement(description: str) -> bool:
 
     pattern = (
         rf"\b({number_pattern})\b"
-        rf"(?:\s*[-–—]\s*({number_pattern}))?"
+        rf"(?:\s*[-â€“â€”]\s*({number_pattern}))?"
         rf"(\+)?\s*(?:years?|yrs?)\b"
         rf"(?:(?:\W+\w+){{0,6}}?\W+experience\b"
         rf"|\s+(?:in|of)\s+\w+)"
