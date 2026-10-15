@@ -6,6 +6,10 @@
 </head>
 <body>
 
+    <button id="theme-toggle" type="button" aria-label="Toggle dark mode">
+        ☀️ Light Mode
+    </button>
+
     <div class="page-header">
         <h1>Job Hunter AI</h1>
         <nav class="page-navigation">
@@ -135,5 +139,30 @@
 
 <script src="/static/js/search.js"></script>
 <script src="/static/js/applications.js"></script>
+<script>
+    const themeToggle = document.getElementById("theme-toggle");
+
+    function updateThemeButton() {
+        const isLight = document.body.classList.contains("light-mode");
+        themeToggle.textContent = isLight ? "🌙 Dark Mode" : "☀️ Light Mode";
+    }
+
+    if (localStorage.getItem("jobHunterTheme") === "light") {
+        document.body.classList.add("light-mode");
+    }
+
+    updateThemeButton();
+
+    themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("light-mode");
+
+        localStorage.setItem(
+            "jobHunterTheme",
+            document.body.classList.contains("light-mode") ? "light" : "dark"
+        );
+
+        updateThemeButton();
+    });
+</script>
 </body>
 </html>
