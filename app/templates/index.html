@@ -8,6 +8,10 @@
 
     <div class="page-header">
         <h1>Job Hunter AI</h1>
+        <nav class="page-navigation">
+            <a href="/">Available Jobs</a>
+            <a href="/applied">Applied Jobs</a>
+        </nav>
         <p>
             <span id="job-count">{{ matching_jobs|length }}</span>
             potential jobs found
@@ -52,7 +56,23 @@
                 </p>
 
                 <p class="score">
-                    Match Score: {{ match["score"] }}
+                    {% if match["score"] is not none %}
+                        AI Match Score: {{ match["score"] }}/100
+                    {% else %}
+                        AI Match Score: Not evaluated
+                    {% endif %}
+                </p>
+
+                <p class="eligibility">
+                    {% if match["eligibility"] == "eligible" %}
+                        Eligibility: Likely eligible
+                    {% elif match["eligibility"] == "ineligible" %}
+                        Eligibility: Likely ineligible
+                    {% elif match["eligibility"] == "unknown" %}
+                        Eligibility: Needs review
+                    {% else %}
+                        Eligibility: Not evaluated
+                    {% endif %}
                 </p>
 
                 <ul class="match-reasons">
@@ -71,10 +91,49 @@
                     View Job
                 </a>
 
+                {% if request.url.path == "/applied" and match.applied_on %}
+                    <p class="applied-date">
+                        <strong>Applied on:</strong>
+                        {{ match.applied_on }}
+                    </p>
+                {% endif %}
+
+                <div class="application-tracking">
+                    {% if request.url.path == "/applied" %}
+                        <button
+                            type="button"
+                            class="status-button"
+                            data-job-id="{{ job['id'] }}"
+                            data-status="not_applied"
+                        >
+                            ↩ Not Applied
+                        </button>
+                    {% else %}
+                        <button
+                            type="button"
+                            class="status-button applied-button"
+                            data-job-id="{{ job['id'] }}"
+                            data-status="applied"
+                        >
+                            👍 Applied
+                        </button>
+
+                        <button
+                            type="button"
+                            class="status-button not-interested-button"
+                            data-job-id="{{ job['id'] }}"
+                            data-status="not_interested"
+                        >
+                            ✕ Not Interested
+                        </button>
+                    {% endif %}
+                </div>
+
             </div>
         {% endfor %}
     </div>
 
 <script src="/static/js/search.js"></script>
+<script src="/static/js/applications.js"></script>
 </body>
 </html>

@@ -1,11 +1,12 @@
 from app.ai_service import analyse_job_match
 from app.config import EXCLUDED_JOB_KEYWORDS, PREFERRED_JOB_KEYWORDS, EXPERIENCE_NUMBER_WORDS, MAX_REQUIRED_EXPERIENCE, GEMINI_MODEL, DAILY_AI_LIMIT, GEMINI_REQUEST_DELAY
-from app.database import get_jobs, get_candidate_profile, get_candidate_analysis, get_job_match_analysis, save_job_match_analysis, get_daily_ai_usage, record_ai_api_request, get_last_ai_request_time, record_ai_request_time
+from app.database import get_jobs, get_candidate_profile, get_candidate_analysis, get_job_match_analysis, save_job_match_analysis, get_daily_ai_usage, record_ai_api_request, get_last_ai_request_time, record_ai_request_time, get_application_statuses
 from app.job_filters import get_job_priority
 from app.matching import get_matching_jobs, location_matches
 from app.models import Job
 from collections import defaultdict
 from datetime import datetime, timezone
+from filelock import FileLock, Timeout
 from google.genai import errors
 import re
 import time
@@ -84,6 +85,13 @@ def get_jobs_for_ai_analysis(limit: int = 5, candidate_id: int = 1):
     jobs = get_jobs()
 
     matches = get_matching_jobs(jobs, candidate)
+
+    application_statuses = get_application_statuses()
+
+    matches = [
+        match for match in matches
+        if application_statuses.get(match["job"]["id"]) != "not_interested"
+    ]
 
     real_matches = [
         match for match in matches
@@ -221,3 +229,19 @@ def evaluate_jobs_with_ai(candidate_id: int = 1, limit: int = 5, max_evaluations
         ),
         reverse=True
     )[:limit]
+
+
+def run_locked_ai_evaluation(candidate_id: int = 1, limit: int = 10, max_evaluations: int = 10, max_api_calls: int = 10):
+    lock = FileLock("data/ai_evaluation.lock", timeout=0)
+
+    try:
+        with lock:
+            return evaluate_jobs_with_ai(
+                candidate_id=candidate_id,
+                limit=limit,
+                max_evaluations=max_evaluations,
+                max_api_calls=max_api_calls
+            )
+    except Timeout:
+        print("Another AI evaluation batch is already running.")
+        return []

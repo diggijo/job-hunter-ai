@@ -95,6 +95,16 @@ def initialize_database():
         )
     """)
 
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS applications (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            job_id INTEGER NOT NULL UNIQUE,
+            status TEXT NOT NULL DEFAULT 'not_applied',
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (job_id) REFERENCES jobs(id)
+        )
+    """)
+
     columns = connection.execute(
         "PRAGMA table_info(job_match_analysis)"
     ).fetchall()
@@ -457,7 +467,6 @@ def record_ai_api_request(model: str) -> int:
         connection.close()
 
 
-
 def get_last_ai_request_time(model: str):
     connection = sqlite3.connect("data/jobhunter.db")
     try:
@@ -490,3 +499,63 @@ def record_ai_request_time(model: str):
         connection.close()
 
     return request_time
+
+
+def save_application_status(job_id: int, status: str):
+    allowed_statuses = {
+        "not_applied",
+        "applied",
+        "not_interested"
+    }
+
+    if status not in allowed_statuses:
+        raise ValueError("Invalid application status")
+
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    connection.execute(
+        """
+        INSERT INTO applications (job_id, status, updated_at)
+        VALUES (?, ?, CURRENT_TIMESTAMP)
+        ON CONFLICT(job_id) DO UPDATE SET
+            status = excluded.status,
+            updated_at = CURRENT_TIMESTAMP
+        """,
+        (job_id, status),
+    )
+
+    connection.commit()
+    connection.close()
+
+
+def get_application_statuses() -> dict[int, str]:
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    rows = connection.execute(
+        "SELECT job_id, status FROM applications"
+    ).fetchall()
+
+    connection.close()
+
+    return {
+        job_id: status
+        for job_id, status in rows
+    }
+
+
+def get_application_dates() -> dict[int, str]:
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    rows = connection.execute("""
+        SELECT job_id, updated_at
+        FROM applications
+        WHERE status = 'applied'
+    """).fetchall()
+
+    connection.close()
+
+    return {
+        job_id: updated_at
+        for job_id, updated_at in rows
+    }
+
