@@ -165,9 +165,9 @@ def add_job(job: Job):
             connection.execute(
                 """
                 INSERT INTO jobs (
-                    title, company, location, description, url, source
+                    title, company, location, description, url, source, first_seen_at
                 )
-                VALUES (?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 """,
                 (
                     job.title,

@@ -27,7 +27,8 @@ def test_job_updates():
                     location TEXT,
                     description TEXT,
                     url TEXT UNIQUE,
-                    source TEXT
+                    source TEXT,
+                    first_seen_at TEXT
                 )
             """)
 

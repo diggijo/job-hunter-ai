@@ -1,3 +1,5 @@
+from app.config import EXCLUDED_JOB_KEYWORDS
+from app.ai_matching import meets_experience_requirement
 from app.database import add_job, get_candidate_profile, get_jobs, initialize_database, get_job_match_analysis, get_application_statuses, save_application_status, get_application_dates
 from app.matching import get_matching_jobs
 from app.models import CandidateProfile, Job
@@ -6,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
+import re
 
 
 app = FastAPI()
@@ -50,6 +53,10 @@ def home(request: Request):
     matching_jobs = [
         match for match in matching_jobs
         if match["application_status"] == "not_applied"
+        and meets_experience_requirement(match["job"]["description"])
+        and not EXCLUDED_JOB_KEYWORDS.intersection(
+            re.findall(r"[a-z]+", match["job"]["title"].lower())
+        )
     ]
 
     matching_jobs.sort(

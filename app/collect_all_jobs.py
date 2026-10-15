@@ -29,6 +29,11 @@ total_batches = (total_boards + BATCH_SIZE - 1) // BATCH_SIZE
 
 start_batch = get_next_batch()
 
+if start_batch >= total_batches:
+    print("Previous collection completed. Starting a new collection cycle.", flush=True)
+    start_batch = 0
+    save_next_batch(0)
+
 print(f"Total Greenhouse boards: {total_boards}", flush=True)
 print(f"Total batches: {total_batches}", flush=True)
 print(f"Resuming from batch {start_batch}", flush=True)
@@ -54,7 +59,7 @@ for batch_number in range(start_batch, total_batches):
             f"Batch {batch_number} failed. Progress not advanced.",
             flush=True
         )
-        break
+        sys.exit(result.returncode)
 
     save_next_batch(batch_number + 1)
 
