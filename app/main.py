@@ -61,8 +61,8 @@ def home(request: Request):
 
     matching_jobs.sort(
         key=lambda match: (
-            eligibility_priority.get(match["eligibility"], 4),
-            -(match["score"] if match["score"] is not None else -1),
+            match["score"] is None,
+            -(match["score"] if match["score"] is not None else 0),
         )
     )
     
