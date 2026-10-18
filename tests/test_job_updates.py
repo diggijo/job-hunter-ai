@@ -28,7 +28,9 @@ def test_job_updates():
                     description TEXT,
                     url TEXT UNIQUE,
                     source TEXT,
-                    first_seen_at TEXT
+                    first_seen_at TEXT,
+                    source_board_id TEXT,
+                    external_job_id TEXT
                 )
             """)
 

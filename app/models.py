@@ -15,6 +15,8 @@ class Job(BaseModel):
     description: str
     url: str
     source: str
+    source_board_id: str | None = None
+    external_job_id: str | None = None
 
 
 class CandidateAnalysis(BaseModel):

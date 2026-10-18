@@ -47,7 +47,10 @@
     <div class="job-list">
         {% for match in matching_jobs %}
         {% set job = match["job"] %}
-            <div class="job-card">
+            <div class="job-card {% if match.is_new_today %}new-today{% endif %}">
+                {% if match.is_new_today %}
+                    <span class="new-today-badge">✨ NEW TODAY</span>
+                {% endif %}
 
                 <h2>{{ job["title"] }}</h2>
 
@@ -67,23 +70,44 @@
                     {% endif %}
                 </p>
 
-                <p class="eligibility">
-                    {% if match["eligibility"] == "eligible" %}
-                        Eligibility: Likely eligible
-                    {% elif match["eligibility"] == "ineligible" %}
-                        Eligibility: Likely ineligible
-                    {% elif match["eligibility"] == "unknown" %}
-                        Eligibility: Needs review
-                    {% else %}
-                        Eligibility: Not evaluated
-                    {% endif %}
-                </p>
+                <div class="job-requirements">
+                    <p>
+                        <strong>Programming Languages:</strong>
+                        {{ match["programming_languages"] | join(", ") if match["programming_languages"] else "Not specified" }}
+                    </p>
 
-                <ul class="match-reasons">
-                    {% for reason in match["reasons"] %}
-                        <li>{{ reason }}</li>
-                    {% endfor %}
-                </ul>
+                    <p>
+                        <strong>Frameworks &amp; Tools:</strong>
+                        {{ match["frameworks_tools"] | join(", ") if match["frameworks_tools"] else "Not specified" }}
+                    </p>
+
+                    <p>
+                        <strong>Required Experience:</strong>
+                        {{ match["required_experience"] | join(", ") if match["required_experience"] else "Not specified" }}
+                    </p>
+
+                    <p><strong>Key Requirements:</strong></p>
+                    {% if match["key_requirements"] %}
+                        <ul>
+                            {% for requirement in match["key_requirements"][:3] %}
+                                <li>{{ requirement }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Not specified</p>
+                    {% endif %}
+
+                    <p><strong>Why It Suits You:</strong></p>
+                    {% if match["strengths"] %}
+                        <ul>
+                            {% for strength in match["strengths"][:3] %}
+                                <li>{{ strength }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Not evaluated</p>
+                    {% endif %}
+                </div>
 
                 <p class="source">
                     Source: {{ job["source"] }}

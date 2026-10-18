@@ -27,6 +27,9 @@ for board_token in boards_to_collect:
 
     time.sleep(1)
 
+    if jobs is None:
+        continue
+
     found_count += len(jobs)
 
     for job in jobs:

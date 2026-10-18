@@ -41,7 +41,10 @@ def initialize_database():
             location TEXT NOT NULL,
             description TEXT NOT NULL,
             url TEXT NOT NULL UNIQUE,
-            source TEXT NOT NULL
+            source TEXT NOT NULL,
+            first_seen_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            source_board_id TEXT,
+            external_job_id TEXT
         )
     """)
 
@@ -154,7 +157,8 @@ def add_job(job: Job):
     try:
         existing_job = connection.execute(
             """
-            SELECT id, title, company, location, description, source
+            SELECT id, title, company, location, description, source,
+                   source_board_id, external_job_id
             FROM jobs
             WHERE url = ?
             """,
@@ -165,9 +169,10 @@ def add_job(job: Job):
             connection.execute(
                 """
                 INSERT INTO jobs (
-                    title, company, location, description, url, source, first_seen_at
+                    title, company, location, description, url, source,
+                    first_seen_at, source_board_id, external_job_id
                 )
-                VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)
                 """,
                 (
                     job.title,
@@ -175,7 +180,9 @@ def add_job(job: Job):
                     job.location,
                     job.description,
                     job.url,
-                    job.source
+                    job.source,
+                    job.source_board_id,
+                    job.external_job_id
                 )
             )
 
@@ -189,11 +196,15 @@ def add_job(job: Job):
             job.company,
             job.location,
             job.description,
-            job.source
+            job.source,
+            job.source_board_id if job.source_board_id is not None else existing_job[6],
+            job.external_job_id if job.external_job_id is not None else existing_job[7]
         )
 
         if existing_job[1:] == new_details:
             return "Unchanged"
+
+        details_changed = existing_job[1:6] != new_details[:5]
 
         connection.execute(
             """
@@ -202,16 +213,19 @@ def add_job(job: Job):
                 company = ?,
                 location = ?,
                 description = ?,
-                source = ?
+                source = ?,
+                source_board_id = ?,
+                external_job_id = ?
             WHERE id = ?
             """,
             (*new_details, job_id)
         )
 
-        connection.execute(
-            "DELETE FROM job_match_analysis WHERE job_id = ?",
-            (job_id,)
-        )
+        if details_changed:
+            connection.execute(
+                "DELETE FROM job_match_analysis WHERE job_id = ?",
+                (job_id,)
+            )
 
         connection.commit()
         return "Updated"
@@ -240,7 +254,7 @@ def get_jobs():
 
     results = connection.execute(
         """
-        SELECT id, title, company, location, description, url, source
+        SELECT id, title, company, location, description, url, source, first_seen_at
         FROM jobs
         """
     ).fetchall()

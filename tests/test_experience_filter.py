@@ -3,8 +3,8 @@ from app.ai_job_evaluation import meets_experience_requirement
 
 def test_experience_filter():
     test_cases = [
-        ("Minimum of 2 years of experience", True),
-        ("At least 3 years of experience", True),
+        ("Minimum of 2 years of experience", False),
+        ("At least 3 years of experience", False),
         ("Minimum of 5 years of experience", False),
         ("7+ years of software engineering experience", False),
         ("Junior Software Engineer - Python and SQL", True),
@@ -13,21 +13,22 @@ def test_experience_filter():
         (
             "Minimum 2 years of experience required. "
             "5 years of experience preferred.",
-            True
-        ),
-        (
-            "2-5 years of professional experience required",
             False
         ),
-        (
-            "4-6 years of professional experience required",
-            False
-        ),
-        ("3 years of professional experience", True),
+        ("2-5 years of professional experience required", False),
+        ("4-6 years of professional experience required", False),
+        ("3 years of professional experience", False),
         ("3+ years of professional experience", False),
-        ("2+ years of professional experience", True),
-        ("1-3 years of professional experience", True),
-        ("2-5 years of professional experience", False)
+        ("2+ years of professional experience", False),
+        ("1-3 years of professional experience", False),
+        ("2-5 years of professional experience", False),
+
+        # New acceptable experience requirements
+        ("Graduate Software Engineer", True),
+        ("0-1 years of relevant experience", True),
+        ("1 year of professional experience", True),
+        ("1+ years of professional experience", True),
+        ("1-2 years of relevant experience", True),
     ]
 
     for description, expected in test_cases:

@@ -3,12 +3,6 @@ document.querySelectorAll(".status-button").forEach(button => {
         const jobId = button.dataset.jobId;
         const status = button.dataset.status;
 
-        if (status === "not_interested") {
-            if (!confirm("Hide this job and exclude it from future AI evaluations?")) {
-                return;
-            }
-        }
-
         button.disabled = true;
 
         try {

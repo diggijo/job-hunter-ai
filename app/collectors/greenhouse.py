@@ -17,7 +17,7 @@ def get_greenhouse_jobs(board_token):
         except httpx.HTTPStatusError as error:
             if error.response.status_code == 404:
                 print(f"Skipping unavailable Greenhouse board: {board_token}")
-                return []
+                return None
 
             if error.response.status_code not in (429, 500, 502, 503, 504):
                 raise
@@ -47,6 +47,18 @@ def get_greenhouse_jobs(board_token):
 
     data = response.json()
 
+    if (
+        not isinstance(data, dict)
+        or not isinstance(data.get("jobs"), list)
+        or not isinstance(data.get("meta"), dict)
+        or not isinstance(data["meta"].get("total"), int)
+        or isinstance(data["meta"]["total"], bool)
+        or data["meta"]["total"] != len(data["jobs"])
+    ):
+        raise ValueError(
+            f"Invalid or incomplete Greenhouse response for {board_token}"
+        )
+
     jobs = []
 
     for greenhouse_job in data["jobs"]:
@@ -59,7 +71,9 @@ def get_greenhouse_jobs(board_token):
             location=(greenhouse_job.get("location") or {}).get("name") or "Unknown",
             description = description,
             url = greenhouse_job["absolute_url"],
-            source = "Greenhouse"
+            source = "Greenhouse",
+            source_board_id = board_token,
+            external_job_id = str(greenhouse_job["id"])
         )
 
         jobs.append(job)

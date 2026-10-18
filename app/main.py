@@ -25,6 +25,25 @@ def home(request: Request):
     profile = get_candidate_profile()
     jobs = get_jobs()
     matching_jobs = get_matching_jobs(jobs, profile)
+
+    today = datetime.now(ZoneInfo("Europe/Dublin")).date()
+
+    for match in matching_jobs:
+        first_seen = match["job"]["first_seen_at"]
+
+        match["is_new_today"] = False
+
+        if first_seen:
+            first_seen_utc = datetime.strptime(
+                first_seen, "%Y-%m-%d %H:%M:%S"
+            ).replace(tzinfo=timezone.utc)
+
+            match["is_new_today"] = (
+                first_seen_utc.astimezone(
+                    ZoneInfo("Europe/Dublin")
+                ).date() == today
+            )
+
     application_statuses = get_application_statuses()
 
     for match in matching_jobs:
@@ -39,9 +58,11 @@ def home(request: Request):
         if analysis is not None:
             match["score"] = analysis.score
             match["eligibility"] = analysis.eligibility
+            match["strengths"] = analysis.strengths
         else:
             match["score"] = None
             match["eligibility"] = "not_evaluated"
+            match["strengths"] = []
 
     eligibility_priority = {
         "eligible": 0,
@@ -53,6 +74,8 @@ def home(request: Request):
     matching_jobs = [
         match for match in matching_jobs
         if match["application_status"] == "not_applied"
+        and match["score"] is not None
+        and match["score"] >= 70
         and meets_experience_requirement(match["job"]["description"])
         and not EXCLUDED_JOB_KEYWORDS.intersection(
             re.findall(r"[a-z]+", match["job"]["title"].lower())

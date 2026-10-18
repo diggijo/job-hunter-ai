@@ -20,7 +20,7 @@ def meets_experience_requirement(description: str) -> bool:
         rf"(?:\s*[-â€“â€”]\s*({number_pattern}))?"
         rf"(\+)?\s*(?:years?|yrs?)\b"
         rf"(?:(?:\W+\w+){{0,6}}?\W+experience\b"
-        rf"|\s+(?:in|of)\s+\w+)"
+        rf"|\s+(?:in|of)\s+\w+)?"
     )
 
     for match in re.finditer(pattern, description.lower()):
@@ -44,10 +44,10 @@ def meets_experience_requirement(description: str) -> bool:
 
         has_plus = match.group(3) is not None
 
-        if years > MAX_REQUIRED_EXPERIENCE:
+        if years >= MAX_REQUIRED_EXPERIENCE and match.group(2) is None:
             return False
 
-        if has_plus and years >= MAX_REQUIRED_EXPERIENCE:
+        if years > MAX_REQUIRED_EXPERIENCE:
             return False
 
     return True

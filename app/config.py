@@ -56,15 +56,97 @@ EXPERIENCE_NUMBER_WORDS = {
     "ten": 10
 }
 
-MAX_REQUIRED_EXPERIENCE = 3
+MAX_REQUIRED_EXPERIENCE = 2
 
 
 # Gemini model used to evaluate job eligibility and candidate match scores.
 GEMINI_MODEL = "gemini-3.5-flash-lite"
 
+
 # Maximum Gemini API requests our job hunter can make per day.
 # Set below the free-tier allowance of 500 to leave a safety buffer.
 DAILY_AI_LIMIT = 475
 
+
 # Minimum delay in seconds between Gemini evaluation requests.
 GEMINI_REQUEST_DELAY = 5
+
+
+PROGRAMMING_LANGUAGE_PATTERNS = {
+    "C#": r"(?<!\w)C#(?!\w)",
+    "C++": r"(?<!\w)C\+\+(?!\w)",
+    "Python": r"\bPython\b",
+    "Java": r"\bJava\b",
+    "JavaScript": r"\bJavaScript\b",
+    "TypeScript": r"\bTypeScript\b",
+    "Go": r"\bGolang\b|\bGo programming\b|\bGo\b", 
+    "Rust": r"\bRust\b",
+    "Ruby": r"\bRuby\b",
+    "PHP": r"\bPHP\b",
+    "Kotlin": r"\bKotlin\b",
+    "Swift": r"\bSwift\b",
+    "SQL": r"\bSQL\b",
+}
+
+FRAMEWORK_TOOL_PATTERNS = {
+    "React": r"\bReact(?:\.js)?\b",
+    "Angular": r"\bAngular\b",
+    "Vue.js": r"\bVue(?:\.js)?\b",
+    "Node.js": r"\bNode(?:\.js)?\b",
+    "Next.js": r"\bNext\.js\b",
+    ".NET": r"(?<!\w)\.NET\b",
+    "ASP.NET": r"\bASP\.NET\b",
+    "FastAPI": r"\bFastAPI\b",
+    "Django": r"\bDjango\b",
+    "Flask": r"\bFlask\b",
+    "Spring Boot": r"\bSpring Boot\b",
+    "AWS": r"\bAWS\b",
+    "Azure": r"\bAzure\b",
+    "Google Cloud": r"\bGCP\b|\bGoogle Cloud\b",
+    "Docker": r"\bDocker\b",
+    "Kubernetes": r"\bKubernetes\b|\bK8s\b",
+    "PostgreSQL": r"\bPostgreSQL\b|\bPostgres\b",
+    "MongoDB": r"\bMongoDB\b",
+    "Git": r"\bGit\b",
+    "CI/CD": r"\bCI/CD\b",
+}
+
+
+EXPERIENCE_PATTERNS = [
+    r"\b(?:at least|minimum of|minimum|over)\s+\d+\+?\s+years?\b",
+    r"\b\d+\s*\+\s*years?\b",
+    r"\b\d+\s*(?:-|–|to)\s*\d+\s+years?\b",
+    r"\b\d+\s+years?\s+(?:of\s+)?(?:professional|commercial|relevant|hands-on|software|development|engineering|work)?\s*experience\b",
+]
+
+
+KEY_REQUIREMENT_PATTERNS = [
+    r"\b\d+\s*[-–]\s*\d+\s+years?\s+of\s+[\w\s]+",
+    r"\b(?:proficiency|experience|familiarity)\s+(?:in|with)\s+[^.!?]{10,300}",
+    r"\b(?:strong|solid|good)\s+(?:foundational\s+)?"
+    r"(?:knowledge|understanding)\s+of\s+[^.!?]{10,300}",
+    r"\bability\s+to\s+[^.!?]{10,300}",
+]
+
+
+KEY_REQUIREMENT_BOUNDARY_PATTERN = (
+    r"\s+(?=(?:Strong|Solid|Good)\s+(?:foundational\s+)?"
+    r"(?:knowledge|understanding)\b|"
+    r"Proficiency\s+(?:in|with)\b|"
+    r"Experience\s+(?:in|with)\b|"
+    r"Familiarity\s+(?:in|with)\b|"
+    r"Ability\s+to\b|"
+    r"Exceptional\s+attention\b)"
+)
+
+
+KEY_REQUIREMENT_START_PATTERN = (
+    r"\b(?:what you will need in this role|requirements|"
+    r"qualifications|what we are looking for|must have)\b"
+)
+
+
+KEY_REQUIREMENT_END_PATTERN = (
+    r"\b(?:additional skills or experience|nice to have|"
+    r"preferred qualifications|benefits|what we offer)\b"
+)
