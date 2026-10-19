@@ -2,6 +2,7 @@ import sys
 import time
 from app.collectors.greenhouse import get_greenhouse_jobs
 from app.database import add_job, get_greenhouse_boards
+from app.job_filters import is_technical_role
 
 
 added_count = 0
@@ -33,6 +34,9 @@ for board_token in boards_to_collect:
     found_count += len(jobs)
 
     for job in jobs:
+        if not is_technical_role(job.title):
+            continue
+
         status = add_job(job)
 
         if status == "Added":
