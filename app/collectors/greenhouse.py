@@ -5,7 +5,7 @@ from app.models import Job
 from app.utils import html_to_text
 
 
-def get_greenhouse_jobs(board_token):
+def get_greenhouse_jobs(board_token, title_filter=None):
     url = f"https://boards-api.greenhouse.io/v1/boards/{board_token}/jobs?content=true"
 
     for attempt in range(3):
@@ -62,6 +62,9 @@ def get_greenhouse_jobs(board_token):
     jobs = []
 
     for greenhouse_job in data["jobs"]:
+        if title_filter is not None and not title_filter(greenhouse_job["title"]):
+            continue
+
         description_html = html.unescape(greenhouse_job["content"])
         description = html_to_text(description_html)
 

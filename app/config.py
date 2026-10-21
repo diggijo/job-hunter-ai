@@ -184,3 +184,7 @@ KEY_REQUIREMENT_END_PATTERN = (
     r"\b(?:additional skills or experience|nice to have|"
     r"preferred qualifications|benefits|what we offer)\b"
 )
+
+BATCH_SIZE = 25
+MAX_WORKERS = 4
+BATCH_DELAY_SECONDS = 2

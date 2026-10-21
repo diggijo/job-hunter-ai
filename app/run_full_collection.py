@@ -3,13 +3,11 @@ import sys
 import time
 from pathlib import Path
 
+from app.config import BATCH_DELAY_SECONDS, BATCH_SIZE
 from app.database import get_greenhouse_boards
 
 
 PROGRESS_FILE = Path("data/collection_progress.txt")
-
-BATCH_SIZE = 25
-DELAY_SECONDS = 5
 
 
 def get_next_batch():
@@ -66,7 +64,7 @@ for batch_number in range(start_batch, total_batches):
     print(f"Batch {batch_number} completed.", flush=True)
 
     if batch_number < total_batches - 1:
-        time.sleep(DELAY_SECONDS)
+        time.sleep(BATCH_DELAY_SECONDS)
 
 else:
     print("\nAll Greenhouse batches completed!", flush=True)
