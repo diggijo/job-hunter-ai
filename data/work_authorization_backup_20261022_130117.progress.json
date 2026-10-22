@@ -1,0 +1,258 @@
+{
+  "881": {
+    "company": "Neo4j",
+    "title": "Software Engineer - Cloud Platform (Networks)",
+    "old_score": 45,
+    "new_score": 45,
+    "old_eligibility": "unknown",
+    "new_eligibility": "ineligible"
+  },
+  "166": {
+    "company": "Anthropic",
+    "title": "Applied AI Engineer, Beneficial Deployments (Life Sciences)",
+    "old_score": 45,
+    "new_score": 45,
+    "old_eligibility": "unknown",
+    "new_eligibility": "unknown"
+  },
+  "1103": {
+    "company": "Virtu Financial",
+    "title": "Full Stack Developer",
+    "old_score": 75,
+    "new_score": 65,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "9921": {
+    "company": "Anaplan",
+    "title": "Data Scientist",
+    "old_score": 68,
+    "new_score": 65,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "27712": {
+    "company": "Catapult Sports",
+    "title": "Computer Vision Engineer",
+    "old_score": 65,
+    "new_score": 65,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "53506": {
+    "company": "Headlands Technologies LLC",
+    "title": "C++ Software Developer ",
+    "old_score": 45,
+    "new_score": 45,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "69869": {
+    "company": "Maven",
+    "title": "C++ Developer - Options Market Making - Relocate to Chicago",
+    "old_score": 35,
+    "new_score": 45,
+    "old_eligibility": "unknown",
+    "new_eligibility": "eligible"
+  },
+  "76270": {
+    "company": "Nebius",
+    "title": "Data Analyst (Agentic Search)",
+    "old_score": 45,
+    "new_score": 45,
+    "old_eligibility": "unknown",
+    "new_eligibility": "ineligible"
+  },
+  "101995": {
+    "company": "SetSales",
+    "title": "Wordpress Web Developer at SetSales",
+    "old_score": 40,
+    "new_score": 45,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "124067": {
+    "company": "Tripadvisor",
+    "title": "Machine Learning Scientist",
+    "old_score": 55,
+    "new_score": 58,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "126611": {
+    "company": "United Media",
+    "title": "Wordpress Web Developer at United Media",
+    "old_score": 40,
+    "new_score": 45,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "135652": {
+    "company": "Wolt - English",
+    "title": "Software Engineer",
+    "old_score": 65,
+    "new_score": 65,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "136780": {
+    "company": "WPP Media",
+    "title": "Data Engineer - GCP",
+    "old_score": 65,
+    "new_score": 65,
+    "old_eligibility": "unknown",
+    "new_eligibility": "eligible"
+  },
+  "890": {
+    "company": "Neo4j",
+    "title": "Software Engineer - Developer Experience",
+    "old_score": 65,
+    "new_score": 60,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "49712": {
+    "company": "GitLab",
+    "title": "Backend Engineer (Python),AI Engineering: Agent Foundations",
+    "old_score": 68,
+    "new_score": 65,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "60737": {
+    "company": "Jane Street",
+    "title": "Front End Software Engineer",
+    "old_score": 60,
+    "new_score": 45,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "74317": {
+    "company": "Referrals Only",
+    "title": "Backend Engineer III ",
+    "old_score": 50,
+    "new_score": 45,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "124112": {
+    "company": "Tripadvisor",
+    "title": "Software Engineer II (Android)",
+    "old_score": 55,
+    "new_score": 45,
+    "old_eligibility": "eligible",
+    "new_eligibility": "ineligible"
+  },
+  "9980": {
+    "company": "Anaplan",
+    "title": "SDET - AI ",
+    "old_score": 55,
+    "new_score": 45,
+    "old_eligibility": "eligible",
+    "new_eligibility": "ineligible"
+  },
+  "903": {
+    "company": "Neo4j",
+    "title": "Software Engineer \u2013 Product Analytics Platform",
+    "old_score": 65,
+    "new_score": 68,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "905": {
+    "company": "Neo4j",
+    "title": "Software Engineer - Software Delivery",
+    "old_score": 45,
+    "new_score": 45,
+    "old_eligibility": "unknown",
+    "new_eligibility": "eligible"
+  },
+  "69883": {
+    "company": "Maven",
+    "title": "Platform Engineer (Kubernetes on-premises)",
+    "old_score": 65,
+    "new_score": 55,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "94299": {
+    "company": "Qube Research & Technologies",
+    "title": "Cloud Engineer - Digital Assets",
+    "old_score": 68,
+    "new_score": 68,
+    "old_eligibility": "unknown",
+    "new_eligibility": "eligible"
+  },
+  "94308": {
+    "company": "Qube Research & Technologies",
+    "title": "Data Platform Engineer \u2013 Inventory & Observability",
+    "old_score": 65,
+    "new_score": 65,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "137705": {
+    "company": "SpaceXSI",
+    "title": "Backend Engineer - API",
+    "old_score": 50,
+    "new_score": 45,
+    "old_eligibility": "unknown",
+    "new_eligibility": "eligible"
+  },
+  "140559": {
+    "company": "AlphaSights",
+    "title": "Mid-level Backend Engineer (Remote) - UK",
+    "old_score": 65,
+    "new_score": 65,
+    "old_eligibility": "unknown",
+    "new_eligibility": "eligible"
+  },
+  "142789": {
+    "company": "DEPT\u00ae",
+    "title": "Data Scientist",
+    "old_score": 58,
+    "new_score": 62,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "140793": {
+    "company": "Anthropic",
+    "title": "Applied AI Engineer, Beneficial Deployments (Clinical Development, Rare and Neglected Diseases)",
+    "old_score": 45,
+    "new_score": 35,
+    "old_eligibility": "eligible",
+    "new_eligibility": "ineligible"
+  },
+  "112744": {
+    "company": "Supermetrics",
+    "title": "Agentic AI Engineer - GTM Systems",
+    "old_score": 65,
+    "new_score": 65,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "140794": {
+    "company": "Anthropic",
+    "title": "Applied AI Engineer, Beneficial Deployments (Lab Automation)",
+    "old_score": 45,
+    "new_score": 45,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "152216": {
+    "company": "ROLLER",
+    "title": "Software Engineer - Localisation",
+    "old_score": 65,
+    "new_score": 65,
+    "old_eligibility": "eligible",
+    "new_eligibility": "eligible"
+  },
+  "152976": {
+    "company": "Clear Street",
+    "title": "Site Reliability Engineer (SRE)",
+    "old_score": 45,
+    "new_score": 58,
+    "old_eligibility": "unknown",
+    "new_eligibility": "eligible"
+  }
+}

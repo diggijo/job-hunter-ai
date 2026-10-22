@@ -27,6 +27,7 @@ class CandidateAnalysis(BaseModel):
     seniority: str
     education: list[str]
     graduation_year: int | None
+    work_authorization: str | None = None
 
 
 class JobMatchAnalysis(BaseModel):

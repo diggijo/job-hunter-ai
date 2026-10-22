@@ -1,0 +1,794 @@
+[
+  {
+    "job_id": 881,
+    "company": "Neo4j",
+    "title": "Software Engineer - Cloud Platform (Networks)",
+    "analysis": {
+      "score": 45,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The job requires advanced knowledge of Google Cloud, AWS, and/or Azure, experience with Go, and building/operating software on Kubernetes. While the candidate has Azure experience, the profile lacks Go and hands-on Kubernetes production experience required for a core cloud networking team.",
+        "The job asks for experienced software engineers for a specialized cloud networking and Kubernetes role, whereas the candidate is a junior/entry-level graduate from 2024.",
+        "There is no explicit mention of visa/work authorization for London, UK, though location restrictions are not definitively disqualifying based solely on missing text."
+      ],
+      "strengths": [
+        "Strong foundational education with a First-Class Honours Computer Science degree.",
+        "Familiarity with cloud technologies including Azure and Docker.",
+        "General backend development skills and understanding of CI/CD pipelines, Agile methodologies, and SDLC."
+      ],
+      "gaps": [
+        "Lack of professional experience in Go, which is a mandatory requirement for the position.",
+        "Missing hands-on production experience with Kubernetes and advanced cloud networking fundamentals (such as Envoy, mTLS, L4/L7 proxies, and Cilium/Calico).",
+        "Seniority mismatch: the role targets experienced cloud platform/networking engineers, whereas the candidate is a recent junior graduate."
+      ],
+      "explanation": "The candidate is a talented recent Computer Science graduate with strong academic credentials and some exposure to cloud tools like Azure and Docker. However, the Neo4j Cloud Platform role specifically demands an experienced software engineer with advanced Kubernetes, cloud networking, and Go programming skills. Due to these significant technical gaps in required tooling and seniority level, the candidate is a partial match with substantial gaps."
+    }
+  },
+  {
+    "job_id": 166,
+    "company": "Anthropic",
+    "title": "Applied AI Engineer, Beneficial Deployments (Life Sciences)",
+    "analysis": {
+      "score": 45,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The job requires deep research experience in life sciences, biomedical research, or scientific computing, which is not explicitly detailed in the candidate profile outside of general computer science and games development education.",
+        "The role expects a level of seniority and forward-deployed engineering experience that typically aligns with mid-to-senior levels, whereas the candidate is a 2024 graduate at a Junior/Entry-Level.",
+        "Visa sponsorship is offered, but specific mandatory years of experience guidelines in the listing are tied to internal levels which remain ambiguous regarding new graduates."
+      ],
+      "strengths": [
+        "Strong foundation in software engineering with Python, Java, C#, and cloud tools like Azure and Docker.",
+        "Familiarity with AI/ML tools such as TensorFlow, Keras, NumPy, and Pandas.",
+        "First-Class Honours Computer Science degree demonstrating strong academic capability."
+      ],
+      "gaps": [
+        "Lack of deep research experience in life sciences, biomedical research, genomics, neuroscience, or drug discovery.",
+        "Junior/Entry-Level seniority contrasts with the high-impact, forward-deployed engineering expectations of this specialized Applied AI role.",
+        "No explicit professional experience building LLM-powered tools, prompting architectures, or agent frameworks in a production setting."
+      ],
+      "explanation": "The candidate is a strong junior software engineering graduate with foundational Python and ML skills, but falls significantly short of the specialized, domain-specific life sciences research and LLM agent engineering experience demanded by this senior-leaning Applied AI role at Anthropic."
+    }
+  },
+  {
+    "job_id": 1103,
+    "company": "Virtu Financial",
+    "title": "Full Stack Developer",
+    "analysis": {
+      "score": 75,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate holds a Computer Science degree and has professional experience matching the software engineering requirements.",
+        "The role requires 2+ years of experience and the candidate has relevant professional software engineering experience as a 2024 graduate with prior project and professional background.",
+        "The location is Dublin, Ireland and the profile indicates suitable background, though explicit work authorization for Ireland is not explicitly detailed, standard graduate eligibility is assumed."
+      ],
+      "strengths": [
+        "Strong programming foundation in Java, Python, JavaScript, and object-oriented design.",
+        "Experience with relational databases including PostgreSQL.",
+        "Familiarity with web client technologies and backend development principles.",
+        "First-Class Honours Computer Science degree with strong academic and practical background."
+      ],
+      "gaps": [
+        "The role specifies 70% frontend focus with required expertise in React and TypeScript, whereas the candidate's profile highlights backend, cloud, embedded systems, and Unity rather than deep React/TypeScript experience.",
+        "Experience with KDB or MySQL is not explicitly listed, though PostgreSQL is present."
+      ],
+      "explanation": "The candidate is a strong technical match with solid foundational skills in Java, JavaScript, Python, and databases, earning a score of 75. While they meet the eligibility criteria, the role is heavily frontend-focused (70%) requiring React and TypeScript, which represents a minor gap compared to their backend and full-stack diversification."
+    }
+  },
+  {
+    "job_id": 9921,
+    "company": "Anaplan",
+    "title": "Data Scientist",
+    "analysis": {
+      "score": 68,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate holds a BSc in Computer Science, meeting general educational background expectations for a Data Scientist role.",
+        "No hard location or work authorization restrictions were violated based on available profile information.",
+        "The candidate possesses professional experience in software engineering and AI/ML, though specialized enterprise data science and deep MLOps stacks requested by the employer are mostly partial or missing."
+      ],
+      "strengths": [
+        "Strong general foundation in Python, NumPy, Pandas, TensorFlow, and scikit-learn.",
+        "Professional experience encompassing AI/ML and software engineering principles.",
+        "Familiarity with cloud platforms (Azure) and containerization tools (Docker).",
+        "Computer Science First-Class Honours graduate with solid fundamentals in data structures and algorithms."
+      ],
+      "gaps": [
+        "Lack of explicit experience with advanced time-series forecasting frameworks requested by the role, such as LightGBM, XGBoost, or PyTorch.",
+        "Missing hands-on professional experience with modern data warehouse transformations tools like dbt and Snowflake.",
+        "Limited exposure to dedicated MLOps tools specifically highlighted in the description, such as MLflow, Optuna, or Airflow.",
+        "Junior seniority level where the role looks for strong hands-on professional experience building and deploying end-to-end data science systems in fast-paced enterprise environments."
+      ],
+      "explanation": "The candidate is a strong junior software engineer and computer science graduate with solid general skills in Python, machine learning libraries, and cloud technologies. However, the role at Anaplan requires specialized experience in enterprise data science, deep learning frameworks like PyTorch, time-series forecasting models (XGBoost/LightGBM), data warehousing tools like Snowflake and dbt, and MLOps platforms. While the candidate is eligible to apply, their profile shows meaningful gaps relative to the specific advanced requirements of this Data Scientist position, resulting in a score of 68."
+    }
+  },
+  {
+    "job_id": 27712,
+    "company": "Catapult Sports",
+    "title": "Computer Vision Engineer",
+    "analysis": {
+      "score": 65,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate holds a BSc in Computer Science with Games Development, matching the technical educational background required.",
+        "No strict minimum years of professional experience or visa restrictions are explicitly stated as hard blockers in the job description that would disqualify a junior candidate.",
+        "The job description explicitly encourages applicants who meet around 60% of criteria to apply."
+      ],
+      "strengths": [
+        "Strong foundational programming skills in Python, Java, C#, and SQL.",
+        "Experience with machine learning frameworks such as TensorFlow, Keras, NumPy, Pandas, and scikit-learn.",
+        "Cloud and containerisation experience using Azure and Docker.",
+        "Academic background in games development provides useful foundational exposure to graphics, math, and spatial computing concepts."
+      ],
+      "gaps": [
+        "Lack of professional computer vision experience, specifically with OpenCV, multi-view geometry, object tracking, and spatial transformation.",
+        "No explicit mention of PyTorch experience, which is requested alongside TensorFlow.",
+        "Limited or no production experience with C++ or CMake, which is required for ONNX Runtime C++ API support.",
+        "Junior/entry-level seniority might require more ramp-up time for advanced geometric computer vision pipelines."
+      ],
+      "explanation": "The candidate is a strong junior Computer Science graduate with solid Python and machine learning foundations, making them eligible under the company's inclusive application policy. However, there are meaningful technical gaps regarding dedicated computer vision expertise, PyTorch, and C++ experience, resulting in a moderate suitability score."
+    }
+  },
+  {
+    "job_id": 53506,
+    "company": "Headlands Technologies LLC",
+    "title": "C++ Software Developer ",
+    "analysis": {
+      "score": 45,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate holds a degree in Computer Science, meeting the preferred education criteria.",
+        "There are no strict mandatory years of experience or visa/location restrictions explicitly stated as hard barriers for new graduates, though a separate new grad posting is mentioned."
+      ],
+      "strengths": [
+        "Holds a First-Class Honours BSc in Computer Science with Games Development.",
+        "Strong foundational knowledge in data structures, algorithms, object-oriented programming, and systems engineering.",
+        "Familiarity with systems-level concepts, concurrency, and performance optimization tools like Grafana and Prometheus."
+      ],
+      "gaps": [
+        "Lack of professional C++ experience, which is the primary programming language required for the role.",
+        "No background in high-frequency trading (HFT) or proprietary electronic trading systems.",
+        "Missing experience in low-level network programming, kernel tuning, and ultra-low latency optimization techniques."
+      ],
+      "explanation": "The candidate has a solid academic background in Computer Science and relevant backend development skills, making them eligible under general criteria. However, the role specifically demands strong proficiency in C++ and low-latency systems for automated electronic trading. Given the candidate's primary experience is in C#, Java, and Python with no commercial C++ or trading background, they represent a partial match with significant technical gaps."
+    }
+  },
+  {
+    "job_id": 69869,
+    "company": "Maven",
+    "title": "C++ Developer - Options Market Making - Relocate to Chicago",
+    "analysis": {
+      "score": 35,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The job description requests relocation to Chicago or working from London, but does not explicitly state mandatory work authorization requirements, leaving visa eligibility unknown."
+      ],
+      "strengths": [
+        "Holds a First-Class Honours Computer Science degree with strong academic foundations in data structures and algorithms.",
+        "Has foundational programming experience in languages like C# and Python, which are listed as nice-to-have secondary skills.",
+        "Shows interest in finance and trading, matching the domain of options market making."
+      ],
+      "gaps": [
+        "Lacks C++ expertise, which is the core mandatory programming language for this role.",
+        "Does not possess experience in ultra-low latency design, performance tuning, or template programming.",
+        "Lacks specific experience in building high-frequency trading systems, exchange connectivity, or options market making infrastructure."
+      ],
+      "explanation": "While the candidate has a strong academic background in Computer Science and some exposure to Python and C#, they completely lack the core mandatory requirement for this role: professional-level C++ development and ultra-low latency design experience. Consequently, the technical match is poor, resulting in a low score."
+    }
+  },
+  {
+    "job_id": 76270,
+    "company": "Nebius",
+    "title": "Data Analyst (Agentic Search)",
+    "analysis": {
+      "score": 45,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The job requires senior-level experience solving search or search-adjacent analytical problems.",
+        "The candidate's profile indicates they are a Junior / Entry-Level Software Engineer who graduated in 2024, which suggests they do not meet the senior-level experience requirement.",
+        "The candidate profile does not explicitly state their citizenship or work authorization status for the Netherlands or the United Kingdom, though the job requires applicants to be authorized to work in the country in which they apply."
+      ],
+      "strengths": [
+        "Strong Python skills, which are explicitly requested for developing and maintaining analytics pipelines and tooling.",
+        "Background in Computer Science with foundational knowledge in data structures, algorithms, and databases.",
+        "Experience with data-related tools and libraries such as NumPy, Pandas, and SQL."
+      ],
+      "gaps": [
+        "The role requires senior-level experience, whereas the candidate is explicitly positioned as a Junior / Entry-Level professional.",
+        "Lack of professional experience in search-related quality metrics, search relevance, ranking and freshness, ads quality, or feed ranking.",
+        "Absence of advanced background in mathematical statistics as required by the role."
+      ],
+      "explanation": "The candidate is a junior computer science graduate with Python skills, aligning with some technical aspects of the role. However, the position specifically requires senior-level experience in search analytics and quality metrics, which the candidate lacks. Therefore, the overall match is poor to partial, resulting in a lower score and an unknown eligibility status due to unconfirmed work authorization and seniority mismatches."
+    }
+  },
+  {
+    "job_id": 101995,
+    "company": "SetSales",
+    "title": "Wordpress Web Developer at SetSales",
+    "analysis": {
+      "score": 40,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate graduated in 2024 and is available to work.",
+        "The role is based in London, and while location is mentioned, there are no strict explicit legal work authorization barriers stated in the mandatory requirements."
+      ],
+      "strengths": [
+        "Holds a First-Class Honours Computer Science degree.",
+        "Strong general software engineering foundation with experience in Python, JavaScript, and database systems."
+      ],
+      "gaps": [
+        "The job specifically requires extensive knowledge and professional focus on WordPress Web Development, which is not highlighted in the candidate's core profile.",
+        "The candidate's profile is heavily oriented towards backend development, embedded systems, AI/ML, and games development rather than CMS management and WordPress optimisation."
+      ],
+      "explanation": "While the candidate is a strong junior software engineer with a great academic background, the job role is highly specialised in WordPress web development and management. The candidate's technical skills do not closely align with this specific CMS-focused requirement, resulting in a low technical suitability score."
+    }
+  },
+  {
+    "job_id": 124067,
+    "company": "Tripadvisor",
+    "title": "Machine Learning Scientist",
+    "analysis": {
+      "score": 55,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate holds a BSc in Computer Science, which aligns with the educational preferences.",
+        "The job states a preference for a PhD or Masters, but notes 'preferred' rather than strictly mandatory, meaning the Bachelor's degree does not make the candidate strictly ineligible.",
+        "No strict location or work authorization restrictions were explicitly mandated as absolute hard stops in the text."
+      ],
+      "strengths": [
+        "Proficiency in Python, NumPy, Pandas, and scikit-learn matching the core data science stack.",
+        "Solid foundation in data structures, algorithms, and machine learning fundamentals.",
+        "Familiarity with SQL and data management.",
+        "Enthusiasm and genuine interest in AI and machine learning."
+      ],
+      "gaps": [
+        "The role asks for an experienced individual (ML II Scientist) or a Master's with 2+ years of practical experience, whereas the candidate is a 2024 junior graduate.",
+        "Lack of explicit professional experience with big data technologies such as Hive and Spark.",
+        "No proven track record mentioned of leading the end-to-end deployment and maintenance of enterprise-scale models in production.",
+        "Absence of explicit professional experience in A/B test design and analysis for marketing attribution and bidding systems."
+      ],
+      "explanation": "The candidate is a strong junior Computer Science graduate with foundational Python and machine learning skills, but the role specifically targets an 'ML II Scientist' requiring higher-level experience (such as a Master's with 2+ years of practical experience or a PhD) and specific big data / deployment maturity. While technically eligible due to preferences not being hard requirements, the seniority gap results in a partial match score."
+    }
+  },
+  {
+    "job_id": 126611,
+    "company": "United Media",
+    "title": "Wordpress Web Developer at United Media",
+    "analysis": {
+      "score": 40,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate has already graduated in 2024 and holds a relevant BSc in Computer Science, satisfying educational baseline requirements.",
+        "No strict legal work authorization or location restrictions were explicitly violated based on available profile information, and the candidate is a junior professional looking for suitable roles."
+      ],
+      "strengths": [
+        "Strong foundational Computer Science background with a First-Class Honours degree.",
+        "General software engineering and technical skills including C#, Java, Python, JavaScript, and database experience.",
+        "Proactive attitude and experience with cross-functional collaboration and agile environments."
+      ],
+      "gaps": [
+        "No explicit professional experience or mention of WordPress development in the candidate profile.",
+        "The profile is heavily geared toward backend development, embedded systems, AI/ML, and Unity, rather than CMS or WordPress site management.",
+        "The role requires in-person work in London, and location logistics/relocation status is not confirmed in the profile."
+      ],
+      "explanation": "While the candidate is eligible based on their educational background and general profile, they are a poor technical match for this specific role. The position calls for an extensive background in WordPress Web Development to manage and optimize a company website, whereas the candidate's primary expertise lies in general software engineering, backend technologies, cloud, embedded systems, and AI/ML, with no documented WordPress experience."
+    }
+  },
+  {
+    "job_id": 135652,
+    "company": "Wolt - English",
+    "title": "Software Engineer",
+    "analysis": {
+      "score": 65,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate graduated in 2024 with a Computer Science degree and has professional software engineering experience, satisfying general junior-to-mid engineering eligibility.",
+        "There are no explicit location restrictions or mandatory visa requirements stated in the job description that disqualify the candidate."
+      ],
+      "strengths": [
+        "Strong backend software engineering background with experience in Java, Python, and JavaScript.",
+        "Hands-on experience with NoSQL databases such as MongoDB, which aligns with Wolt's tech stack requirements.",
+        "Demonstrated ability in software engineering principles, cloud technologies, and database management."
+      ],
+      "gaps": [
+        "The job description states a strong preference for Golang experience, which is missing from the candidate's profile.",
+        "The role requires extensive experience with AI-assisted development tools like Codex and Claude, as well as agentic workflows, which are not explicitly mentioned in the candidate profile.",
+        "The candidate is a recent 2024 graduate (Junior/Entry-Level), whereas the role requires taking ownership of complex, cross-team projects in ambiguous environments typically expected of mid-to-senior backend engineers."
+      ],
+      "explanation": "The candidate is a strong Computer Science graduate with relevant backend and NoSQL database experience, making them generally eligible to apply. However, there are meaningful technical gaps, most notably the lack of Golang experience, AI-assisted development tooling (Codex, Claude, agentic workflows), and the senior-leaning scope of the role regarding autonomous project delivery across cross-functional teams."
+    }
+  },
+  {
+    "job_id": 136780,
+    "company": "WPP Media",
+    "title": "Data Engineer - GCP",
+    "analysis": {
+      "score": 65,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The job description states that this is a UK-based role requiring individuals to have the right to work in this location.",
+        "The candidate profile does not specify work authorization or citizenship for the United Kingdom."
+      ],
+      "strengths": [
+        "Strong foundation in Python and SQL for scripting, data transformation, and analysis.",
+        "Familiarity with cloud platforms (Azure) which translates well to GCP concepts.",
+        "General programming background with a First-Class Honours Computer Science degree.",
+        "Experience with CI/CD, Agile methodologies, and version control tools like GitHub and Docker."
+      ],
+      "gaps": [
+        "Lack of explicit professional experience with Google Cloud Platform (GCP), BigQuery, or Snowflake.",
+        "No listed experience with data build tool (DBT) for data modelling.",
+        "No specific mentions of data warehousing principles or dedicated data engineering production pipelines.",
+        "Junior/Entry-Level seniority against a role expecting a proven track record as a Data Engineer."
+      ],
+      "explanation": "The candidate is a strong junior software engineer with solid skills in Python and SQL, but lacks direct professional experience in data engineering, GCP, Snowflake, and DBT. While their technical background offers a good foundation, they have meaningful gaps in data warehousing and cloud data stack specifics required for this role."
+    }
+  },
+  {
+    "job_id": 890,
+    "company": "Neo4j",
+    "title": "Software Engineer - Developer Experience",
+    "analysis": {
+      "score": 65,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate graduated in 2024 and is positioned well for junior/entry-level roles, meeting the general timeline for early-career opportunities.",
+        "No strict geographical restrictions or visa requirements were violated based on the available profile and job text."
+      ],
+      "strengths": [
+        "Strong background in modern software engineering principles, with a First-Class Honours Computer Science degree.",
+        "Experience with cloud technologies (Azure) and containerization (Docker, CI/CD).",
+        "Interest and foundation in practical AI/ML and developer tooling workflows.",
+        "Solid core programming skills in multiple languages like C#, Python, and Java."
+      ],
+      "gaps": [
+        "Missing explicit professional experience with Golang, which is a key technical requirement for the role.",
+        "Lacks direct experience with Kubernetes, local developer tooling like Kustomize or Helm, and container-orchestration environments.",
+        "Limited background in building developer-facing platforms, CLIs, or internal developer experience (DevEx) products."
+      ],
+      "explanation": "The candidate is a strong junior software engineer with solid cloud and containerization experience, but has a significant technical gap regarding Golang and Kubernetes expertise, which are highlighted as mandatory requirements in the job description. Nevertheless, their foundational software engineering skills, interest in AI workflows, and cloud exposure provide a reasonable match for a junior developer experience role."
+    }
+  },
+  {
+    "job_id": 49712,
+    "company": "GitLab",
+    "title": "Backend Engineer (Python),AI Engineering: Agent Foundations",
+    "analysis": {
+      "score": 68,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate is a 2024 Computer Science graduate and meets the general profile for backend/AI engineering.",
+        "GitLab explicitly encourages candidates with varying levels of experience to apply, reducing strict seniority barriers.",
+        "The candidate resides in an eligible remote region implicitly supported based on standard remote guidelines, and no strict visa or mandatory certification blocks are violated."
+      ],
+      "strengths": [
+        "Strong foundation in Python and backend development principles.",
+        "Demonstrated experience with AI/ML tools, libraries (TensorFlow, scikit-learn), and data science fundamentals.",
+        "Knowledge of modern software engineering practices, including CI/CD, Docker, and REST APIs.",
+        "First-Class Honours degree in Computer Science highlighting strong academic aptitude."
+      ],
+      "gaps": [
+        "The role specifies an Intermediate level Backend Engineer, whereas the candidate is a Junior / Entry-Level engineer with graduation in 2024.",
+        "Lack of explicit professional experience with LLM application frameworks such as LangGraph or LangChain mentioned in the profile.",
+        "Familiarity with Ruby on Rails, GraphQL, or Vue is not heavily emphasized in the candidate profile."
+      ],
+      "explanation": "The candidate is a strong junior backend and AI enthusiast with solid Python skills and a relevant Computer Science degree. However, the role calls for an intermediate engineer with specific production experience in LLM frameworks like LangGraph and LangChain. While the candidate has good foundational skills and AI exposure, the gap in seniority and specific agentic framework experience results in a moderate match score."
+    }
+  },
+  {
+    "job_id": 60737,
+    "company": "Jane Street",
+    "title": "Front End Software Engineer",
+    "analysis": {
+      "score": 60,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate graduated in 2024 with a Computer Science degree and holds professional software engineering experience, meeting the entry-level profile of the role.",
+        "There are no explicit geographic or work authorization restrictions stated in the profile that would disqualify the candidate, and the job location matches the candidate's availability for standard professional roles."
+      ],
+      "strengths": [
+        "Strong foundational knowledge in computer science with a First-Class Honours degree.",
+        "Broad software engineering experience including backend development, cloud technologies, and cross-functional collaboration.",
+        "Familiarity with general web technologies like JavaScript, HTML, and modern software development practices."
+      ],
+      "gaps": [
+        "The job specifically emphasizes frontend development, UI design, and typed functional programming (e.g., Elm, ReasonML, Purescript, TypeScript, OCaml), whereas the candidate's primary strengths lean toward backend, embedded systems, and general software engineering.",
+        "Lack of explicit professional experience building sophisticated browser-based UIs or working with modern UI frameworks such as React, Vue, or Angular as highlighted in the job description."
+      ],
+      "explanation": "The candidate is eligible as a recent Computer Science graduate with standard software engineering skills, but they show a moderate technical mismatch. While they have a strong overall computer science background, their profile emphasizes backend, embedded systems, and Unity/AI rather than the specialized frontend development, UI/UX polish, and typed functional programming required by Jane Street for this role."
+    }
+  },
+  {
+    "job_id": 74317,
+    "company": "Referrals Only",
+    "title": "Backend Engineer III ",
+    "analysis": {
+      "score": 50,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate is authorized or eligible to work based on standard UK remote criteria, and the company offers visa sponsorship and relocation if needed.",
+        "The candidate has graduated in 2024 and meets the general profile for backend software engineering roles."
+      ],
+      "strengths": [
+        "Strong foundational knowledge in Computer Science with a First-Class Honours degree.",
+        "Experience with strongly-typed languages and backend technologies including C# and Java.",
+        "Familiarity with cloud and DevOps tools such as Docker and Azure.",
+        "Experience with databases and messaging systems like PostgreSQL, MongoDB, and RabbitMQ."
+      ],
+      "gaps": [
+        "The role is an Engineer III (L40) position requiring mid-to-senior level backend experience, whereas the candidate is a Junior / Entry-Level engineer with graduation in 2024.",
+        "Lacking specific experience with the core tech stack used by the company, such as Go, Cassandra, Kafka, and Kubernetes.",
+        "Does not possess the deep distributed systems experience expected for an Engineer III level role."
+      ],
+      "explanation": "The candidate is a strong junior graduate with relevant backend skills, but is significantly underqualified for this specific Engineer III (L40) role in terms of seniority and years of experience. Monzo's Engineer III positions typically require mid-to-senior level engineers, whereas the candidate graduated in 2024 and falls into the junior bracket. While the candidate possesses transferable backend and strongly-typed language experience, they lack the specific stack (Go, Kafka, Kubernetes) and seniority level required."
+    }
+  },
+  {
+    "job_id": 124112,
+    "company": "Tripadvisor",
+    "title": "Software Engineer II (Android)",
+    "analysis": {
+      "score": 55,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate is a 2024 Computer Science graduate and currently works as a Software Engineer, satisfying the requirement of being out of university.",
+        "The candidate is based in London/UK commutable distance based on general tech graduate profiles, and no explicit visa restrictions were violated based on profile data.",
+        "While the job asks for 'At least 3 years' experience of commercial software development', the candidate's exact commercial duration is junior/entry-level, making experience borderline, but no strict disqualifier is explicitly stated as a hard cutoff in the description."
+      ],
+      "strengths": [
+        "Solid foundation in software engineering principles with a First-Class Honours Computer Science degree.",
+        "Experience across backend development, cloud technologies (Azure), and modern programming languages (C#, Python, Java, JavaScript).",
+        "Familiarity with collaborative and agile workflows, CI/CD, and version control (GitHub)."
+      ],
+      "gaps": [
+        "The role specifically requires Android app development (Kotlin, Coroutines, Jetpack Compose), but the candidate's profile lists no commercial or project experience in Android development or Kotlin.",
+        "The role requires at least 3 years of commercial software development experience, whereas the candidate is a recent 2024 graduate entering at a junior/entry level.",
+        "Lacks experience with GraphQL and modern mobile app architecture (MVVM/Clean Architecture for mobile platforms)."
+      ],
+      "explanation": "The candidate is a strong junior software engineer with a great computer science background and backend/cloud skills. However, the Tripadvisor role specifically targets a Software Engineer II (Android) with at least 3 years of experience and deep expertise in Android development (Kotlin, Jetpack Compose), which the candidate lacks. Therefore, while generally eligible to apply, there are significant technical gaps in mobile-specific technologies and years of experience."
+    }
+  },
+  {
+    "job_id": 9980,
+    "company": "Anaplan",
+    "title": "SDET - AI ",
+    "analysis": {
+      "score": 55,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate holds a Computer Science degree and has Python skills matching general requirements.",
+        "No strict years of experience or visa barriers are explicitly stated as mandatory disqualifiers in the job description."
+      ],
+      "strengths": [
+        "Strong proficiency in Python, which is heavily requested for automated test suites in the role.",
+        "Experience with AI/ML concepts and general software engineering principles.",
+        "Familiarity with CI/CD, GitHub, and API tools."
+      ],
+      "gaps": [
+        "The role specifically asks for a Senior SDET for AI, whereas the candidate is a Junior/Entry-Level Software Engineer (2024 graduate).",
+        "Lack of professional experience specifically in software development in test (SDET) and GenAI quality assurance / red-teaming / evaluation frameworks.",
+        "No direct mention of Pytest, Selenium, or specialized LLM evaluation frameworks."
+      ],
+      "explanation": "The candidate is a junior computer science graduate with strong Python and AI/ML foundations, making them eligible to apply. However, the role calls for a Senior SDET specialized in GenAI and agentic workflow testing. The seniority gap and the lack of specific professional QA/SDET experience result in a moderate suitability score."
+    }
+  },
+  {
+    "job_id": 903,
+    "company": "Neo4j",
+    "title": "Software Engineer \u2013 Product Analytics Platform",
+    "analysis": {
+      "score": 65,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate has graduated in 2024 and holds a relevant BSc in Computer Science, satisfying educational background criteria.",
+        "There are no explicit geographic or visa restrictions mentioned in the job description that would automatically disqualify the candidate, and they have junior-to-mid software engineering experience."
+      ],
+      "strengths": [
+        "Strong foundation in backend development, API concepts, and software engineering principles.",
+        "Familiarity with cloud platforms (Azure) and database technologies (PostgreSQL, MongoDB).",
+        "Proficiency in languages like Python, Java, and JavaScript which are relevant to backend and full-stack environments."
+      ],
+      "gaps": [
+        "Go (Golang) is stated as the primary required language for the role, but it is missing from the candidate's technical skills profile.",
+        "Lack of specific direct experience with high-throughput event ingestion systems or telemetry data platforms like Segment or BigQuery.",
+        "The role is a founding member position requiring strong standalone architecture decisions for data platforms, whereas the candidate is at a Junior/Entry-Level seniority."
+      ],
+      "explanation": "The candidate is a strong First-Class Honours Computer Science graduate with relevant backend and cloud experience, making them eligible to apply. However, there is a notable technology gap as the role requires Go as the primary language, which the candidate lacks. Additionally, the role asks for backend engineering experience building ingestion systems and designing APIs at a level that leans slightly higher than the candidate's Junior/Entry-Level seniority, resulting in a score of 65."
+    }
+  },
+  {
+    "job_id": 905,
+    "company": "Neo4j",
+    "title": "Software Engineer - Software Delivery",
+    "analysis": {
+      "score": 45,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The candidate's work authorization or right to work in London is not specified in the profile.",
+        "While the candidate has general software engineering experience, the job description explicitly mandates strong Kubernetes experience and strong Golang experience, neither of which are prominently featured or demonstrated as 'strong' in the candidate's profile."
+      ],
+      "strengths": [
+        "Holds a First-Class Honours Computer Science degree with practical software development background.",
+        "Familiarity with cloud and DevOps tools such as Azure, Docker, and CI/CD pipelines.",
+        "Experience with backend development and database technologies (PostgreSQL, MongoDB)."
+      ],
+      "gaps": [
+        "Lacks explicit professional experience or strong demonstrated projects in Golang, which is a core mandatory requirement for the role.",
+        "Lacks deep, production-level Kubernetes experience and working with custom resource definitions or operator patterns as required by the position.",
+        "The role focuses heavily on Platform Engineering and internal developer tooling (ArgoCD, K8s control plane, developer platforms), whereas the candidate's background leans more towards general software engineering, Unity, and AI/ML."
+      ],
+      "explanation": "The candidate is a junior Computer Science graduate with a solid academic background and general software engineering skills in C#, Python, and Java. However, the Neo4j Software Engineer position in the Software Delivery team specifically mandates strong Golang and Kubernetes experience for building internal developer platforms. Since the candidate does not showcase Golang or deep Kubernetes expertise, they represent a partial match with significant gaps for this specific platform engineering role."
+    }
+  },
+  {
+    "job_id": 69883,
+    "company": "Maven",
+    "title": "Platform Engineer (Kubernetes on-premises)",
+    "analysis": {
+      "score": 65,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate has graduated in 2024 and is not currently a student.",
+        "The job requires at least 2+ years of experience, and the candidate has professional software engineering experience alongside a strong technical background.",
+        "No explicit location restrictions or work authorization barriers are violated based on the provided profile."
+      ],
+      "strengths": [
+        "Strong proficiency in Python, which is specifically requested for building and automating operations tasks.",
+        "Experience with containerization and cloud technologies such as Docker, Azure, and CI/CD pipelines.",
+        "Familiarity with monitoring tools like Prometheus and Grafana, aligning with system health monitoring and alerting needs.",
+        "Solid foundation in software engineering principles, data structures, and cross-functional collaboration."
+      ],
+      "gaps": [
+        "The role asks for an experienced technical operations specialist, DevOps engineer, or Platform Engineer with at least 2+ years of experience, whereas the candidate is at the Junior / Entry-Level stage.",
+        "Limited or no direct professional production experience with Kubernetes on-premises management as highlighted in the job title and description.",
+        "Lacks specific mention of Kafka or extensive enterprise Linux systems administration in a proprietary trading environment."
+      ],
+      "explanation": "The candidate is a 2024 Computer Science graduate with solid programming skills in Python, Docker, and monitoring tools, making them eligible under general criteria. However, the role is geared towards a more senior or experienced Platform/DevOps Engineer with specific on-premises Kubernetes and trading environment expertise. While the candidate has relevant technical foundations and transferable skills, their junior seniority level creates meaningful gaps for this specific position."
+    }
+  },
+  {
+    "job_id": 94299,
+    "company": "Qube Research & Technologies",
+    "title": "Cloud Engineer - Digital Assets",
+    "analysis": {
+      "score": 68,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The job description does not explicitly state mandatory graduation years, degree types, or legal work authorization/visa requirements for London, leaving certain criteria unknown."
+      ],
+      "strengths": [
+        "Strong proficiency in Python, which is requested for scripting and automation in the role.",
+        "Hands-on experience with containerisation and orchestration tools like Docker.",
+        "Familiarity with CI/CD practices and pipeline tools such as Jenkins.",
+        "Solid foundation in software engineering principles, cloud technologies, and distributed systems."
+      ],
+      "gaps": [
+        "The job description heavily emphasizes AWS, whereas the candidate's primary cloud experience listed is with Azure.",
+        "Lack of explicit mention of Infrastructure-as-Code tools such as Terraform or AWS CDK in the profile.",
+        "Junior/Entry-level seniority may fall short of the 'extensive experience with AWS services and infrastructure' implied by the role."
+      ],
+      "explanation": "The candidate has a strong technical background in Python, Docker, and CI/CD tools, making them a reasonable match for a cloud or DevOps role. However, the role specifically requires extensive experience with AWS and Infrastructure-as-Code tools like Terraform, whereas the candidate's primary cloud experience is in Azure. Additionally, the candidate is a 2024 graduate at a junior level, which presents a gap regarding the depth of experience expected for this position."
+    }
+  },
+  {
+    "job_id": 94308,
+    "company": "Qube Research & Technologies",
+    "title": "Data Platform Engineer \u2013 Inventory & Observability",
+    "analysis": {
+      "score": 65,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate graduated in 2024 and holds a Computer Science degree, fulfilling educational and student status criteria.",
+        "There are no explicit geographic or visa restrictions mentioned in the job description that would disqualify the candidate based on available data."
+      ],
+      "strengths": [
+        "Strong Python software engineering experience and familiarity with building scalable data pipelines.",
+        "Proficiency in SQL, PostgreSQL, MongoDB, and data modelling concepts.",
+        "Experience with Docker, CI/CD, and monitoring/observability tools like Prometheus and Grafana.",
+        "First-Class Honours Computer Science degree with a solid foundation in data structures and algorithms."
+      ],
+      "gaps": [
+        "The role is targeting a mid-to-senior level Data Platform Engineer, whereas the candidate is a junior/entry-level graduate with limited production-grade data platform experience at scale.",
+        "Lack of explicit experience with advanced data modelling tools like dbt or knowledge graphs (e.g., Neo4j skill is present, but not applied directly to CMDB or infrastructure inventory at scale).",
+        "Limited direct experience with AWS services and cloud SDKs compared to the heavy focus on Azure in the profile."
+      ],
+      "explanation": "The candidate possesses a strong technical foundation in Python, SQL, and database technologies, alongside relevant skills in observability and cloud systems. However, the role requires building and operating production-grade data platforms and infrastructure inventory systems at scale, which generally aligns with a more senior professional than a 2024 junior graduate. The candidate is eligible to apply and shows reasonable transferable potential, but faces meaningful experience gaps relative to the seniority expected for this platform engineering role."
+    }
+  },
+  {
+    "job_id": 137705,
+    "company": "SpaceXSI",
+    "title": "Backend Engineer - API",
+    "analysis": {
+      "score": 50,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The job description requires expert knowledge of either Rust or C++, which is not explicitly detailed in the candidate profile.",
+        "There is no explicit information regarding work authorization or location restrictions for the UK position."
+      ],
+      "strengths": [
+        "Strong foundational background in Computer Science with experience in backend development, distributed databases (PostgreSQL, MongoDB), and cloud technologies (Azure, Docker).",
+        "Familiarity with Python, Java, and modern software engineering principles.",
+        "General understanding of scalable systems and backend infrastructure concepts."
+      ],
+      "gaps": [
+        "Lacks expert knowledge of Rust or C++, which are explicitly requested compiled languages for backend infrastructure.",
+        "Lacks experience with high-throughput LLM inference engines and serving frameworks like vLLM, SGLang, or TensorRT.",
+        "Junior seniority level may not align fully with the heavy distributed systems and high-throughput production infrastructure expectations described.",
+        "Missing experience with Clickhouse, Kubernetes, and advanced gRPC streaming implementations."
+      ],
+      "explanation": "The candidate is a strong junior Computer Science graduate with solid backend and database experience, but lacks the specific core requirements of expert-level Rust or C++ knowledge and LLM inference engine familiarity demanded by this high-performance backend and AI infrastructure role."
+    }
+  },
+  {
+    "job_id": 140559,
+    "company": "AlphaSights",
+    "title": "Mid-level Backend Engineer (Remote) - UK",
+    "analysis": {
+      "score": 65,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The job description explicitly states that this is a remote position exclusively for current UK residents, but the candidate profile does not specify their current country of residence or right to work in the UK."
+      ],
+      "strengths": [
+        "First-Class Honours Computer Science degree with a strong foundation in modern software engineering principles.",
+        "Strong backend development skills including experience with Python, Java, SQL, PostgreSQL, and .NET.",
+        "Experience with cloud technologies and CI/CD tools such as Azure, Docker, and Jenkins.",
+        "Familiarity with collaborative Agile development methodologies and cross-functional teamwork."
+      ],
+      "gaps": [
+        "The job is for a mid-level backend engineer, while the candidate's seniority is listed as Junior / Entry-Level.",
+        "Lack of experience with the company's primary backend language (Kotlin) and secondary language (Ruby), although Python is used.",
+        "No specific mention of experience working with React on the frontend or distributed microservices architectures at scale."
+      ],
+      "explanation": "The candidate has a strong academic and technical foundation in computer science and backend development, making them a reasonable match for a software engineering role. However, the role is targeted at a mid-level engineer while the candidate is junior, and there are gaps in specific technology stack requirements such as Kotlin and Ruby. Additionally, residency status for UK work authorization is not specified in the profile, leading to an unknown eligibility status."
+    }
+  },
+  {
+    "job_id": 142789,
+    "company": "DEPT\u00ae",
+    "title": "Data Scientist",
+    "analysis": {
+      "score": 58,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate holds a Bachelor's degree in Computer Science, meeting general educational foundations, although the job lists a specific preference for an MSc in an analytical discipline.",
+        "No strict geographic or visa restrictions were violated based on available profile information.",
+        "The job description encourages applicants to apply even if they do not meet every requirement, making the candidate eligible for consideration."
+      ],
+      "strengths": [
+        "Proficiency in Python and core data science libraries such as scikit-learn, pandas, and NumPy.",
+        "Experience with cloud technologies (Azure) and DevOps tools like Docker.",
+        "Strong background in software engineering principles, algorithms, and SQL databases.",
+        "First-Class Honours Computer Science degree demonstrating strong academic capability."
+      ],
+      "gaps": [
+        "Lacks an MSc degree in a highly analytical or quantitative discipline such as Econometrics, Data Science, Applied Mathematics or Statistics as requested.",
+        "Missing hands-on professional experience specifically building media effectiveness solutions, Media Mix Modelling (MMM), incrementality studies, and multi-touchpoint attribution.",
+        "Junior/entry-level seniority whereas the role implies significant client-facing consulting and leadership responsibilities in data science implementation.",
+        "Lacks deep specialized understanding of Bayesian modelling and advanced causal inference in a marketing measurement context."
+      ],
+      "explanation": "The candidate is a strong junior software engineer with solid Python and data science library skills, but lacks the specific domain expertise in Media Mix Modelling (MMM), attribution solutions, and Bayesian econometric methods required for this mid-to-senior level Data Scientist role. Furthermore, the candidate holds a BSc rather than the preferred MSc, resulting in a partial match with significant technical and experience gaps."
+    }
+  },
+  {
+    "job_id": 140793,
+    "company": "Anthropic",
+    "title": "Applied AI Engineer, Beneficial Deployments (Clinical Development, Rare and Neglected Diseases)",
+    "analysis": {
+      "score": 45,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate holds a Bachelor's degree (BSc in Computer Science), meeting the minimum education requirement.",
+        "Anthropic offers visa sponsorship, meaning location and work authorization are not immediate hard barriers."
+      ],
+      "strengths": [
+        "Strong technical background in software engineering, Python, and machine learning.",
+        "First-Class Honours Computer Science degree with experience building tools.",
+        "Good general communication and software development skills."
+      ],
+      "gaps": [
+        "Lack of hands-on clinical development experience (designing, running, or analysing clinical trials).",
+        "No experience with drug repurposing or working with biomedical data (omics, real-world health records, patient registries).",
+        "Junior / entry-level seniority, whereas the role compensates at a senior level (\u00a3225k-\u00a3255k) and requires partner-facing advisory work with clinicians and medical researchers."
+      ],
+      "explanation": "While the candidate meets the basic educational requirement and has a strong computer science background, they are a junior/entry-level applicant lacking the specific domain expertise required for this role, such as clinical trial design, biomedical data analysis, and drug repurposing. The position requires deep life sciences domain knowledge and senior-level customer-facing advisory capabilities."
+    }
+  },
+  {
+    "job_id": 112744,
+    "company": "Supermetrics",
+    "title": "Agentic AI Engineer - GTM Systems",
+    "analysis": {
+      "score": 65,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate graduated in 2024 and meets the general software engineering background requirements.",
+        "The job is located in Dublin or Helsinki, but no specific citizenship or visa status constraints are mentioned in the candidate profile, making residency status unknown; however, since no explicit mandatory disqualifier is breached, eligibility defaults to eligible."
+      ],
+      "strengths": [
+        "Strong foundation in software engineering, backend services, REST APIs, and database usage (SQL, PostgreSQL, MongoDB).",
+        "Familiarity with cloud technologies (Azure) and containerization/CI/CD (Docker, Jenkins, GitHub).",
+        "Computer Science background with modern programming languages like Python and C#."
+      ],
+      "gaps": [
+        "The job specifically requires hands-on Google Cloud experience (Cloud Run, Pub/Sub, BigQuery), whereas the candidate's profile lists Azure.",
+        "The role requires applied LLM experience in production (agents, evaluation, guardrails, cost/latency management), which is not explicitly evidenced in the candidate profile.",
+        "The position asks for a sole engineer in a RevOps context working with third-party GTM APIs (Salesforce, HubSpot, Zendesk), which are not listed in the candidate's skills."
+      ],
+      "explanation": "The candidate is a recent Computer Science graduate with solid general software engineering skills, including backend development and cloud familiarity (Azure). However, the role requires specific production-level experience with Google Cloud, applied LLMs in production, and GTM systems/tools like BigQuery and Salesforce. These specific platform and AI requirements represent meaningful gaps for a junior candidate stepping into a sole infrastructure engineer role for GTM AI agents."
+    }
+  },
+  {
+    "job_id": 140794,
+    "company": "Anthropic",
+    "title": "Applied AI Engineer, Beneficial Deployments (Lab Automation)",
+    "analysis": {
+      "score": 45,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate holds a Bachelor's degree (BSc Computer Science), meeting the minimum education requirement.",
+        "Anthropic sponsors visas, and the candidate's location and general work authorization do not strictly preclude application."
+      ],
+      "strengths": [
+        "Strong background in computer science, software engineering, Python, and AI/ML technologies.",
+        "First-class honours degree with a strong foundation in modern software engineering principles.",
+        "Experience with cloud technologies, Docker, and full-stack development."
+      ],
+      "gaps": [
+        "The role requires hands-on experience connecting software to lab robots and instruments (liquid handlers, plate readers, scheduling software, LIMS), which is missing from the candidate's profile.",
+        "The role targets a senior/experienced Applied AI Engineer level with significant compensation (\u00a3225k-\u00a3255k), whereas the candidate is a junior/entry-level graduate from 2024.",
+        "Lacks direct experience working with external scientific customers or partners in a technical consulting or lab automation capacity."
+      ],
+      "explanation": "While the candidate meets the basic educational requirement and has a strong computer science foundation, they are a junior/entry-level graduate without the specialized, hands-on lab automation experience (connecting software to lab robots, LIMS, liquid handlers) or the seniority required for this high-level Applied AI Engineer position at Anthropic."
+    }
+  },
+  {
+    "job_id": 152216,
+    "company": "ROLLER",
+    "title": "Software Engineer - Localisation",
+    "analysis": {
+      "score": 65,
+      "eligibility": "eligible",
+      "eligibility_reasons": [
+        "The candidate graduated in 2024 and holds a Computer Science degree, meaning they are no longer a student and meet the general educational requirements.",
+        "No specific country-level work authorization blocks or citizenship requirements are stated as hard exclusions in the prompt, and the candidate profile does not violate any explicit mandatory criteria."
+      ],
+      "strengths": [
+        "Strong core backend proficiency in C# and .NET matching the primary stack of the role.",
+        "Hands-on experience with cloud platforms like Azure and general cloud/containerization tools like Docker.",
+        "Familiarity with modern software engineering principles, agile methodologies, and CI/CD pipelines.",
+        "Demonstrated interest and openness to utilizing AI and modern tooling in the development lifecycle."
+      ],
+      "gaps": [
+        "The job description explicitly asks for solid mid-level or senior experience, whereas the candidate is a junior / entry-level developer graduating in 2024.",
+        "The role requires frontend experience with Angular or TypeScript, but the candidate's primary frontend exposure listed is JavaScript and Unity rather than Angular specifically.",
+        "Lacks professional experience building complex third-party integrations for financial, tax, or fiscal compliance rules."
+      ],
+      "explanation": "The candidate has a solid foundational skill set aligned with the backend requirements of the role, notably C# and .NET. However, there is a clear seniority gap, as the company is looking for mid-level to senior engineers while the candidate is a junior/entry-level graduate from 2024. Additionally, the role requires Angular and specific experience with regulatory or fiscal third-party integrations, which are not strongly represented in the candidate's profile."
+    }
+  },
+  {
+    "job_id": 152976,
+    "company": "Clear Street",
+    "title": "Site Reliability Engineer (SRE)",
+    "analysis": {
+      "score": 45,
+      "eligibility": "unknown",
+      "eligibility_reasons": [
+        "The job is located in London, UK, but the candidate profile does not specify work authorization or visa requirements for the UK.",
+        "The role requires experience in SRE, Production Engineering, or Platform Engineering, which is not explicitly detailed as prior professional experience in the candidate's profile, though they have general software engineering experience."
+      ],
+      "strengths": [
+        "Strong foundational programming skills in Python and Java which align with the tech stack.",
+        "Experience with cloud technologies (Azure), Docker, and CI/CD pipelines (Jenkins, GitHub).",
+        "Familiarity with databases like PostgreSQL and MongoDB."
+      ],
+      "gaps": [
+        "Lack of explicit professional experience in Site Reliability Engineering (SRE), Production Engineering, or Platform Engineering.",
+        "Missing hands-on experience with Kubernetes, AWS, Terraform, ArgoCD, Kafka, Redis, and Datadog which are core to the job requirements.",
+        "Junior/entry-level background applying for a specialized engineering discipline typically requiring dedicated operational experience."
+      ],
+      "explanation": "The candidate is a recent Computer Science graduate with solid general software engineering skills in Python and cloud technologies. However, the role of Site Reliability Engineer at Clear Street requires specific production engineering experience, deep familiarity with cloud-native infrastructure tools like Kubernetes, Terraform, and Datadog, and operational ownership that exceeds the candidate's current entry-level background. Additionally, work authorization status for London, UK, is unknown."
+    }
+  }
+]
