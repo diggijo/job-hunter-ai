@@ -1,5 +1,5 @@
 from app.ai_job_evaluation import run_locked_ai_evaluation
-from app.config import DAILY_AI_LIMIT
+from app.config import DAILY_AI_LIMIT, MIN_MATCH_SCORE
 import argparse
 
 
@@ -38,15 +38,35 @@ def main():
     print(f"\nEligible matches: {len(eligible_results)}")
     print(f"Unknown eligibility: {len(unknown_results)}")
 
-    for result in eligible_results:
+    
+    recommended_results = eligible_results + unknown_results
+
+    recommended_results.sort(
+        key=lambda result: result["analysis"].score,
+        reverse=True,
+    )
+
+    print("\nRecommended jobs:")
+
+    for result in recommended_results:
         job = result["job"]
         analysis = result["analysis"]
+
+        if analysis.score < MIN_MATCH_SCORE:
+            continue
+
+        status = (
+            "Eligible"
+            if analysis.eligibility == "eligible"
+            else "Eligibility needs verification"
+        )
 
         print(
             f"{analysis.score}/100 | "
             f"{job['company']} | "
             f"{job['title']} | "
-            f"{analysis.eligibility}"
+            f"{job['location']} | "
+            f"{status}"
         )
 
 

@@ -70,6 +70,14 @@
                     {% endif %}
                 </p>
 
+                <p class="eligibility">
+                    {% if match["eligibility"] == "eligible" %}
+                        <strong>Eligibility:</strong> Eligible
+                    {% elif match["eligibility"] == "unknown" %}
+                        <strong>Eligibility:</strong> Needs verification
+                    {% endif %}
+                </p>
+
                 <div class="job-requirements">
                     <p>
                         <strong>Programming Languages:</strong>

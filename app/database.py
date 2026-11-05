@@ -58,6 +58,13 @@ def initialize_database():
     """)
 
     connection.execute("""
+        CREATE TABLE IF NOT EXISTS ashby_boards (
+            board_token TEXT PRIMARY KEY,
+            company_name TEXT NOT NULL
+        )
+    """)
+
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS candidate_analysis (
             id INTEGER PRIMARY KEY,
             candidate_id INTEGER NOT NULL UNIQUE,
@@ -412,6 +419,44 @@ def get_greenhouse_boards():
     connection.close()
 
     return [row[0] for row in rows]
+
+
+def add_ashby_board(board_token: str, company_name: str):
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    try:
+        cursor = connection.execute(
+            """
+            INSERT OR IGNORE INTO ashby_boards
+            (board_token, company_name)
+            VALUES (?, ?)
+            """,
+            (board_token, company_name),
+        )
+
+        connection.commit()
+        return cursor.rowcount > 0
+
+    finally:
+        connection.close()
+
+
+def get_ashby_boards():
+    connection = sqlite3.connect("data/jobhunter.db")
+
+    try:
+        rows = connection.execute(
+            """
+            SELECT board_token, company_name
+            FROM ashby_boards
+            ORDER BY board_token
+            """
+        ).fetchall()
+
+        return rows
+
+    finally:
+        connection.close()
 
 
 def get_daily_ai_usage(model: str) -> int:

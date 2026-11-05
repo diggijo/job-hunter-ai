@@ -161,9 +161,6 @@ def evaluate_jobs_with_ai(candidate_id: int = 1, limit: int = 5, max_evaluations
                 print(f"Daily Gemini budget reached: {daily_usage}/{DAILY_AI_LIMIT}")
                 break
 
-            api_calls += 1
-
-            daily_usage = record_ai_api_request(GEMINI_MODEL)
 
             print(
                 f"Calling Gemini ({daily_usage}/{DAILY_AI_LIMIT} today): "
@@ -179,36 +176,64 @@ def evaluate_jobs_with_ai(candidate_id: int = 1, limit: int = 5, max_evaluations
                 source=job_row["source"]
             )
 
-            last_request_time = get_last_ai_request_time(GEMINI_MODEL)
-
-            if last_request_time is not None:
-                elapsed = (
-                    datetime.now(timezone.utc) - last_request_time
-                ).total_seconds()
-
-                remaining_delay = GEMINI_REQUEST_DELAY - elapsed
-
-                if remaining_delay > 0:
-                    time.sleep(remaining_delay)
-
-            record_ai_request_time(GEMINI_MODEL)
+            analysis = None
 
             try:
+                daily_usage = get_daily_ai_usage(GEMINI_MODEL)
+
+                if daily_usage >= DAILY_AI_LIMIT or api_calls >= max_api_calls:
+                    print("Gemini API budget reached.")
+                    break
+
+                last_request_time = get_last_ai_request_time(GEMINI_MODEL)
+
+                if last_request_time is not None:
+                    elapsed = (
+                        datetime.now(timezone.utc) - last_request_time
+                    ).total_seconds()
+
+                    remaining_delay = GEMINI_REQUEST_DELAY - elapsed
+
+                    if remaining_delay > 0:
+                        time.sleep(remaining_delay)
+
+                record_ai_request_time(GEMINI_MODEL)
+
+                api_calls += 1
+                daily_usage = record_ai_api_request(GEMINI_MODEL)
+
+                print(
+                    f"Gemini request {daily_usage}/{DAILY_AI_LIMIT}: "
+                    f"{job_row['title']}"
+                )
+
                 analysis = analyse_job_match(candidate, job)
                 save_job_match_analysis(candidate_id, job_id, analysis)
 
             except errors.APIError as error:
-                if error.code == 429:
-                    print("Gemini rate limit reached (429). Stopping this batch.")
-                else:
-                    print(f"Gemini API error ({error.code}): {error}")
-
-                break
+                print(
+                    f"Gemini API error ({error.code}): "
+                    f"{job_row['title']} — {error}"
+                )
 
             except Exception as error:
                 print(f"Gemini evaluation failed: {job_row['title']}")
                 print(f"Error: {error}")
-                break
+
+            if analysis is None:
+                if (
+                    api_calls >= max_api_calls
+                    or api_calls >= max_evaluations
+                    or get_daily_ai_usage(GEMINI_MODEL) >= DAILY_AI_LIMIT
+                ):
+                    print("Gemini evaluation budget reached. Stopping.")
+                    break
+
+                print(
+                    f"Gemini evaluation failed. Skipping: "
+                    f"{job_row['title']}"
+                )
+                continue
 
         else:
             print(f"Using cached analysis: {job_row['title']}")

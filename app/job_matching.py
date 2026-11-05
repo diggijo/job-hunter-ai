@@ -111,28 +111,43 @@ def title_matches(title: str, preferred_roles=None) -> bool:
     return is_technical_role(title)
 
 
+
 def location_matches(job_location, preferred_locations=None):
+    if not job_location or not preferred_locations:
+        return False
+
     location = job_location.lower().strip()
+    preferences = {item.lower().strip() for item in preferred_locations}
 
-    for target in TARGET_LOCATIONS:
-        target = target.lower()
+    is_remote = "remote" in location
 
-        if target == "dublin" and "dublin" in location:
-            return True
-
-        if target == "london" and "london" in location:
-            return True
-
-        if target == "uk (remote)":
-            if "remote" in location and (
+    # Remote positions must explicitly support the UK or Ireland.
+    if is_remote:
+        if "uk (remote)" in preferences:
+            if (
                 "united kingdom" in location
                 or re.search(r"\buk\b", location)
+                or "england" in location
+                or "london" in location
             ):
                 return True
 
-        if target == "ireland (remote)":
-            if "remote" in location and "ireland" in location:
+        if "ireland (remote)" in preferences:
+            if "ireland" in location or "dublin" in location:
                 return True
+
+        return False
+
+    # On-site and hybrid positions.
+    if "ireland" in preferences:
+        if "ireland" in location or "dublin" in location:
+            return True
+
+    for city in ("london", "new york", "toronto", "boston"):
+        if city in preferences and re.search(
+            rf"\b{re.escape(city)}\b", location
+        ):
+            return True
 
     return False
 

@@ -1,4 +1,4 @@
-from app.config import EXCLUDED_JOB_KEYWORDS
+from app.config import EXCLUDED_JOB_KEYWORDS, MIN_MATCH_SCORE
 from app.ai_job_evaluation import meets_experience_requirement
 from app.database import add_job, get_candidate_profile, get_jobs, initialize_database, get_job_match_analysis, get_application_statuses, save_application_status, get_application_dates
 from app.job_matching import get_matching_jobs
@@ -64,18 +64,12 @@ def home(request: Request):
             match["eligibility"] = "not_evaluated"
             match["strengths"] = []
 
-    eligibility_priority = {
-        "eligible": 0,
-        "unknown": 1,
-        "not_evaluated": 2,
-        "ineligible": 3,
-    }
-
     matching_jobs = [
         match for match in matching_jobs
         if match["application_status"] == "not_applied"
         and match["score"] is not None
-        and match["score"] >= 70
+        and match["score"] >= MIN_MATCH_SCORE
+        and match["eligibility"] in ("eligible", "unknown")
         and meets_experience_requirement(match["job"]["description"])
         and not EXCLUDED_JOB_KEYWORDS.intersection(
             re.findall(r"[a-z]+", match["job"]["title"].lower())

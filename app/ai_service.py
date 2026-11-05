@@ -122,6 +122,22 @@ def analyse_job_match(
         - Do not assume the candidate has qualifications or
           authorization that are not stated.
         - Distinguish mandatory requirements from preferences.
+
+        Work authorization and sponsorship:
+        - Do not penalize technical suitability scores because
+          the candidate may require visa sponsorship.
+        - If a job does not mention work authorization or visa
+          sponsorship, do not mark it ineligible for that reason.
+          Treat authorization as unresolved, not a confirmed barrier.
+        - If the employer explicitly offers sponsorship, do not
+          mark the candidate ineligible solely for needing it.
+        - If the employer explicitly refuses sponsorship and the
+          candidate requires it, mark the job ineligible.
+        - If the job explicitly requires existing work authorization
+          that the candidate does not have, mark it ineligible.
+        - Do not assume sponsorship is available merely because
+          the job posting does not discuss it.
+        - Apply other mandatory eligibility requirements normally.
         - Explain the decision in eligibility_reasons.
 
         Next, evaluate the candidate's technical suitability.
