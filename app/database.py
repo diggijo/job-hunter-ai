@@ -1,4 +1,5 @@
 import sqlite3
+DB_PATH = "data/jobhunter.db"
 from app.config import JOB_MATCH_CACHE_VERSION
 from app.models import Job, CandidateAnalysis, CandidateProfile, JobMatchAnalysis
 from datetime import datetime, timezone, timedelta
@@ -6,7 +7,7 @@ from pydantic import ValidationError
 
 
 def initialize_database():
-    connection = sqlite3.connect('data/jobhunter.db')
+    connection = sqlite3.connect(DB_PATH)
 
     connection.execute("""
         CREATE TABLE IF NOT EXISTS candidate_profile (
@@ -106,6 +107,17 @@ def initialize_database():
     """)
 
     connection.execute("""
+        CREATE TABLE IF NOT EXISTS ai_evaluation_queue (
+            job_id INTEGER PRIMARY KEY,
+            candidate_id INTEGER NOT NULL,
+            last_error TEXT,
+            failed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (job_id) REFERENCES jobs(id),
+            FOREIGN KEY (candidate_id) REFERENCES candidate_profile(id)
+        )
+    """)
+
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS applications (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             job_id INTEGER NOT NULL UNIQUE,
@@ -132,7 +144,7 @@ def initialize_database():
 
 
 def get_candidate_profile():
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
 
     candidate = connection.execute(
@@ -159,7 +171,7 @@ def get_candidate_profile():
 
 
 def add_job(job: Job):
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     try:
         existing_job = connection.execute(
@@ -242,7 +254,7 @@ def add_job(job: Job):
 
 
 def invalidate_job_match_cache(job_id: int):
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     try:
         connection.execute(
@@ -256,7 +268,7 @@ def invalidate_job_match_cache(job_id: int):
 
 
 def get_jobs():
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
 
     results = connection.execute(
@@ -272,7 +284,7 @@ def get_jobs():
 
 
 def get_candidate_analysis(candidate_id: int) -> CandidateAnalysis | None:
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
 
     try:
@@ -299,7 +311,7 @@ def get_candidate_analysis(candidate_id: int) -> CandidateAnalysis | None:
 
 
 def save_candidate_analysis(candidate_id: int, analysis: CandidateAnalysis):
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     try:
         connection.execute("""
@@ -324,7 +336,7 @@ def save_candidate_analysis(candidate_id: int, analysis: CandidateAnalysis):
 
 def save_job_match_analysis(candidate_id: int, job_id: int, analysis: JobMatchAnalysis):
 
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     try:
         connection.execute("""
@@ -354,7 +366,7 @@ def save_job_match_analysis(candidate_id: int, job_id: int, analysis: JobMatchAn
 
 def get_job_match_analysis(candidate_id: int, job_id: int) -> JobMatchAnalysis | None:
 
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
 
     try:
@@ -385,7 +397,7 @@ def get_job_match_analysis(candidate_id: int, job_id: int) -> JobMatchAnalysis |
 
 
 def add_greenhouse_board(board_token: str, company_name: str = None):
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     cursor = connection.execute(
         """
@@ -406,7 +418,7 @@ def add_greenhouse_board(board_token: str, company_name: str = None):
 
 
 def get_greenhouse_boards():
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     rows = connection.execute(
         """
@@ -422,7 +434,7 @@ def get_greenhouse_boards():
 
 
 def add_ashby_board(board_token: str, company_name: str):
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     try:
         cursor = connection.execute(
@@ -442,7 +454,7 @@ def add_ashby_board(board_token: str, company_name: str):
 
 
 def get_ashby_boards():
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     try:
         rows = connection.execute(
@@ -470,7 +482,7 @@ def get_daily_ai_usage(model: str) -> int:
         ZoneInfo("America/Los_Angeles")
     ).date().isoformat()
 
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     try:
         row = connection.execute(
@@ -494,7 +506,7 @@ def record_ai_api_request(model: str) -> int:
         ZoneInfo("America/Los_Angeles")
     ).date().isoformat()
 
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     try:
         connection.execute(
@@ -527,7 +539,7 @@ def record_ai_api_request(model: str) -> int:
 
 
 def get_last_ai_request_time(model: str):
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
     try:
         row = connection.execute(
             "SELECT last_request_at FROM ai_request_timing WHERE model = ?",
@@ -542,7 +554,7 @@ def get_last_ai_request_time(model: str):
 def record_ai_request_time(model: str):
     request_time = datetime.now(timezone.utc)
 
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
     try:
         connection.execute(
             """
@@ -570,7 +582,7 @@ def save_application_status(job_id: int, status: str):
     if status not in allowed_statuses:
         raise ValueError("Invalid application status")
 
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     connection.execute(
         """
@@ -588,7 +600,7 @@ def save_application_status(job_id: int, status: str):
 
 
 def get_application_statuses() -> dict[int, str]:
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     rows = connection.execute(
         "SELECT job_id, status FROM applications"
@@ -603,7 +615,7 @@ def get_application_statuses() -> dict[int, str]:
 
 
 def get_application_dates() -> dict[int, str]:
-    connection = sqlite3.connect("data/jobhunter.db")
+    connection = sqlite3.connect(DB_PATH)
 
     rows = connection.execute("""
         SELECT job_id, updated_at
@@ -617,4 +629,82 @@ def get_application_dates() -> dict[int, str]:
         job_id: updated_at
         for job_id, updated_at in rows
     }
+
+
+def add_to_ai_evaluation_queue(candidate_id: int, job_id: int, error: str):
+    connection = sqlite3.connect(DB_PATH)
+
+    try:
+        connection.execute("""
+            INSERT INTO ai_evaluation_queue
+                (job_id, candidate_id, last_error, failed_at)
+            VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+            ON CONFLICT(job_id) DO UPDATE SET
+                candidate_id = excluded.candidate_id,
+                last_error = excluded.last_error,
+                failed_at = CURRENT_TIMESTAMP
+        """, (job_id, candidate_id, error))
+
+        connection.commit()
+    finally:
+        connection.close()
+
+
+def remove_from_ai_evaluation_queue(job_id: int):
+
+    connection = sqlite3.connect(DB_PATH)
+
+    try:
+        connection.execute(
+            "DELETE FROM ai_evaluation_queue WHERE job_id = ?",
+            (job_id,)
+        )
+        connection.commit()
+    finally:
+        connection.close()
+
+
+def get_ai_evaluation_queue_job_ids(candidate_id: int) -> set[int]:
+    connection = sqlite3.connect(DB_PATH)
+
+    try:
+        rows = connection.execute("""
+            SELECT job_id
+            FROM ai_evaluation_queue
+            WHERE candidate_id = ?
+        """, (candidate_id,)).fetchall()
+
+        return {row[0] for row in rows}
+    finally:
+        connection.close()
+
+
+def get_ai_evaluation_queue(candidate_id: int = 1):
+    connection = sqlite3.connect(DB_PATH)
+    connection.row_factory = sqlite3.Row
+
+    try:
+        rows = connection.execute("""
+            SELECT
+                q.job_id,
+                q.candidate_id,
+                q.last_error,
+                q.failed_at,
+                j.title,
+                j.company,
+                j.location,
+                j.description,
+                j.url,
+                j.source
+            FROM ai_evaluation_queue q
+            JOIN jobs j ON j.id = q.job_id
+            WHERE q.candidate_id = ?
+            ORDER BY q.failed_at ASC
+        """, (candidate_id,)).fetchall()
+
+        return [dict(row) for row in rows]
+    finally:
+        connection.close()
+
+
 

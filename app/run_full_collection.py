@@ -124,7 +124,7 @@ for batch_number in range(start_ashby_batch, total_ashby_batches):
             flush=True,
         )
         sys.exit(result.returncode)
-        save_next_ashby_batch(batch_number + 1)
+    save_next_ashby_batch(batch_number + 1)
 
     print(
         f"Ashby batch {batch_number + 1} completed.",

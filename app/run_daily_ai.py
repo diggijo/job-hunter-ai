@@ -1,5 +1,5 @@
 from app.ai_job_evaluation import run_locked_ai_evaluation
-from app.config import DAILY_AI_LIMIT, MIN_MATCH_SCORE
+from app.config import MIN_MATCH_SCORE
 import argparse
 
 
@@ -11,7 +11,8 @@ def main():
     )
     args = parser.parse_args()
 
-    max_requests = 0 if args.dry_run else DAILY_AI_LIMIT
+    MAX_BATCH_REQUESTS = 1000
+    max_requests = 0 if args.dry_run else MAX_BATCH_REQUESTS    
 
     print(
         "Starting daily AI job evaluation..."

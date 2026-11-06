@@ -1,6 +1,5 @@
 import re
 from app.config import (
-    TARGET_LOCATIONS,
     PROGRAMMING_LANGUAGE_PATTERNS,
     FRAMEWORK_TOOL_PATTERNS,
     EXPERIENCE_PATTERNS,
@@ -107,9 +106,8 @@ def extract_key_requirements(description: str) -> list[str]:
     return requirements[:4]
 
 
-def title_matches(title: str, preferred_roles=None) -> bool:
+def title_matches(title: str) -> bool:
     return is_technical_role(title)
-
 
 
 def location_matches(job_location, preferred_locations=None):

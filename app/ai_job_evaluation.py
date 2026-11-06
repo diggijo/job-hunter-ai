@@ -1,6 +1,6 @@
 from app.ai_service import analyse_job_match
-from app.config import EXCLUDED_JOB_KEYWORDS, PREFERRED_JOB_KEYWORDS, EXPERIENCE_NUMBER_WORDS, MAX_REQUIRED_EXPERIENCE, GEMINI_MODEL, DAILY_AI_LIMIT, GEMINI_REQUEST_DELAY
-from app.database import get_jobs, get_candidate_profile, get_candidate_analysis, get_job_match_analysis, save_job_match_analysis, get_daily_ai_usage, record_ai_api_request, get_last_ai_request_time, record_ai_request_time, get_application_statuses
+from app.config import EXCLUDED_JOB_KEYWORDS, EXPERIENCE_NUMBER_WORDS, MAX_REQUIRED_EXPERIENCE, GEMINI_MODEL, GEMINI_REQUEST_DELAY
+from app.database import *
 from app.job_filters import get_job_priority
 from app.job_matching import get_matching_jobs, location_matches
 from app.models import Job
@@ -110,10 +110,14 @@ def get_jobs_for_ai_analysis(limit: int = 5, candidate_id: int = 1):
 
     ranked_matches = diversify_jobs(ranked_matches)
 
+    queued_job_ids = get_ai_evaluation_queue_job_ids(candidate_id)
     eligible_candidates = []
 
     for match in ranked_matches:
         job_id = match["job"]["id"]
+
+        if job_id in queued_job_ids:
+            continue
 
         cached_analysis = get_job_match_analysis(candidate_id, job_id)
 
@@ -142,6 +146,28 @@ def evaluate_jobs_with_ai(candidate_id: int = 1, limit: int = 5, max_evaluations
             get_job_priority(match["job"]["title"])
         )
     )
+
+    def queue_remaining_jobs(error_message: str):
+        queued = 0
+        existing_queued_ids = get_ai_evaluation_queue_job_ids(candidate_id)
+
+        for remaining_match in matches:
+            remaining_job_id = remaining_match["job"]["id"]
+            if remaining_job_id in existing_queued_ids:
+                continue
+
+            if get_job_match_analysis(candidate_id, remaining_job_id) is not None:
+                continue
+
+            add_to_ai_evaluation_queue(
+                candidate_id,
+                remaining_job_id,
+                error_message
+            )
+            queued += 1
+
+        print(f"Jobs awaiting evaluation in queue: {queued}")
+
     results = []
     api_calls = 0
 
@@ -153,17 +179,18 @@ def evaluate_jobs_with_ai(candidate_id: int = 1, limit: int = 5, max_evaluations
 
         if analysis is None:
             if api_calls >= max_api_calls or api_calls >= max_evaluations:
-                continue
+                if max_api_calls > 0 and max_evaluations > 0:
+                    queue_remaining_jobs(
+                        "Pending evaluation: Gemini batch request limit reached"
+                    )
+
+                print("Gemini batch request limit reached.")
+                break
 
             daily_usage = get_daily_ai_usage(GEMINI_MODEL)
 
-            if daily_usage >= DAILY_AI_LIMIT:
-                print(f"Daily Gemini budget reached: {daily_usage}/{DAILY_AI_LIMIT}")
-                break
-
-
             print(
-                f"Calling Gemini ({daily_usage}/{DAILY_AI_LIMIT} today): "
+                f"Calling Gemini (attempt {daily_usage + 1} today): "
                 f"{job_row['title']} at {job_row['company']}"
             )
 
@@ -179,10 +206,8 @@ def evaluate_jobs_with_ai(candidate_id: int = 1, limit: int = 5, max_evaluations
             analysis = None
 
             try:
-                daily_usage = get_daily_ai_usage(GEMINI_MODEL)
-
-                if daily_usage >= DAILY_AI_LIMIT or api_calls >= max_api_calls:
-                    print("Gemini API budget reached.")
+                if api_calls >= max_api_calls:
+                    print("Gemini batch request limit reached.")
                     break
 
                 last_request_time = get_last_ai_request_time(GEMINI_MODEL)
@@ -203,30 +228,49 @@ def evaluate_jobs_with_ai(candidate_id: int = 1, limit: int = 5, max_evaluations
                 daily_usage = record_ai_api_request(GEMINI_MODEL)
 
                 print(
-                    f"Gemini request {daily_usage}/{DAILY_AI_LIMIT}: "
+                    f"Gemini request #{daily_usage} today: "
                     f"{job_row['title']}"
                 )
 
                 analysis = analyse_job_match(candidate, job)
                 save_job_match_analysis(candidate_id, job_id, analysis)
+                remove_from_ai_evaluation_queue(job_id)
 
             except errors.APIError as error:
-                print(
-                    f"Gemini API error ({error.code}): "
-                    f"{job_row['title']} — {error}"
+                print(f"Gemini API error ({error.code}): {job_row['title']}")
+
+                add_to_ai_evaluation_queue(
+                    candidate_id,
+                    job_id,
+                    f"Gemini API error {error.code}: {error}"
                 )
+
+                if error.code == 429:
+                    print("Gemini quota or rate limit reached.")
+
+                    queue_remaining_jobs(
+                        "Pending evaluation: Gemini quota or rate limit reached (429)"
+                    )
+
+                    print("Remaining jobs added to the retry queue.")
+                    break
 
             except Exception as error:
                 print(f"Gemini evaluation failed: {job_row['title']}")
                 print(f"Error: {error}")
 
+                add_to_ai_evaluation_queue(
+                    candidate_id,
+                    job_id,
+                    str(error)
+                )
+
             if analysis is None:
-                if (
-                    api_calls >= max_api_calls
-                    or api_calls >= max_evaluations
-                    or get_daily_ai_usage(GEMINI_MODEL) >= DAILY_AI_LIMIT
-                ):
-                    print("Gemini evaluation budget reached. Stopping.")
+                if api_calls >= max_api_calls or api_calls >= max_evaluations:
+                    queue_remaining_jobs(
+                        "Pending evaluation: Gemini batch request limit reached"
+                    )
+                    print("Gemini batch request limit reached. Stopping.")
                     break
 
                 print(
@@ -237,12 +281,6 @@ def evaluate_jobs_with_ai(candidate_id: int = 1, limit: int = 5, max_evaluations
 
         else:
             print(f"Using cached analysis: {job_row['title']}")
-
-        if analysis.eligibility == "ineligible":
-            print(f"\nIneligible: {job_row['title']}")
-            print(f"AI Score: {analysis.score}")
-            print(f"Reasons: {analysis.eligibility_reasons}\n")
-            continue
 
         results.append({"job": job_row, "analysis": analysis})
 

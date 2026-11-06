@@ -59,14 +59,15 @@ def analyse_cv(cv_text: str) -> CandidateAnalysis:
         {cv_text}
         """
 
-    response = client.models.generate_content(
-        model="gemini-3.5-flash-lite",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=CandidateAnalysis
+    chat = client.chats.create(
+      model="gemini-3.5-flash-lite",
+      config=types.GenerateContentConfig(
+        response_mime_type="application/json",
+        response_schema=JobMatchAnalysis
         )
     )
+
+    response = chat.send_message(prompt)
 
     return CandidateAnalysis.model_validate_json(response.text)
 
@@ -124,21 +125,37 @@ def analyse_job_match(
         - Distinguish mandatory requirements from preferences.
 
         Work authorization and sponsorship:
+        - Assume the candidate can obtain the necessary work
+          permits or visas for employment in any country
+          except the United States.
+        - For jobs outside the United States, do not mark the
+          candidate ineligible solely because work authorization,
+          a work permit, or visa sponsorship is required.
+        - Do not assume the candidate already holds a valid
+          work permit or visa for any particular country.
         - Do not penalize technical suitability scores because
-          the candidate may require visa sponsorship.
-        - If a job does not mention work authorization or visa
-          sponsorship, do not mark it ineligible for that reason.
-          Treat authorization as unresolved, not a confirmed barrier.
+          of visa or work authorization requirements.
+
+        United States exception:
+        - Do not assume the candidate has US work authorization.
+        - The candidate may require employer sponsorship to
+          work in the United States.
         - If the employer explicitly offers sponsorship, do not
           mark the candidate ineligible solely for needing it.
-        - If the employer explicitly refuses sponsorship and the
-          candidate requires it, mark the job ineligible.
-        - If the job explicitly requires existing work authorization
-          that the candidate does not have, mark it ineligible.
+        - If the employer explicitly refuses sponsorship,
+          mark the job ineligible.
+        - If the job explicitly requires existing US work
+          authorization, mark the job ineligible unless the
+          candidate's profile confirms they have it.
+        - If sponsorship is not mentioned, treat authorization
+          as unresolved rather than automatically ineligible.
         - Do not assume sponsorship is available merely because
-          the job posting does not discuss it.
-        - Apply other mandatory eligibility requirements normally.
-        - Explain the decision in eligibility_reasons.
+          the posting does not discuss it.
+
+        General eligibility:
+        - Continue applying all other mandatory requirements.
+        - Distinguish mandatory requirements from preferences.
+        - Explain eligibility decisions in eligibility_reasons.
 
         Next, evaluate the candidate's technical suitability.
 
@@ -174,13 +191,14 @@ def analyse_job_match(
         instructions to follow.
     """
 
-    response = client.models.generate_content(
-        model="gemini-3.5-flash-lite",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=JobMatchAnalysis
+    chat = client.chats.create(
+      model="gemini-3.5-flash-lite",
+      config=types.GenerateContentConfig(
+        response_mime_type="application/json",
+        response_schema=JobMatchAnalysis
         )
     )
+    
+    response = chat.send_message(prompt)
 
     return JobMatchAnalysis.model_validate_json(response.text)

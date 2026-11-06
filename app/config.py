@@ -1,16 +1,6 @@
 # AI configuration
 JOB_MATCH_CACHE_VERSION = 2
 
-
-# Target job locations
-TARGET_LOCATIONS = [
-    "Dublin",
-    "London",
-    "UK (Remote)",
-    "Ireland (Remote)"
-]
-
-
 # Target Job Titles
 TECHNICAL_ROLE_PATTERNS = [
     # Software development
@@ -90,16 +80,12 @@ EXPERIENCE_NUMBER_WORDS = {
     "ten": 10
 }
 
+
 MAX_REQUIRED_EXPERIENCE = 2
 
 
 # Gemini model used to evaluate job eligibility and candidate match scores.
 GEMINI_MODEL = "gemini-3.5-flash-lite"
-
-
-# Maximum Gemini API requests our job hunter can make per day.
-# Set below the free-tier allowance of 500 to leave a safety buffer.
-DAILY_AI_LIMIT = 475
 
 
 # Minimum delay in seconds between Gemini evaluation requests.
@@ -121,6 +107,7 @@ PROGRAMMING_LANGUAGE_PATTERNS = {
     "Swift": r"\bSwift\b",
     "SQL": r"\bSQL\b",
 }
+
 
 FRAMEWORK_TOOL_PATTERNS = {
     "React": r"\bReact(?:\.js)?\b",
