@@ -154,10 +154,7 @@ def get_matching_jobs(jobs, profile):
     matching_jobs = []
 
     for job in jobs:
-        title_match = title_matches(
-            job["title"],
-            profile["preferred_roles"]
-        )
+        title_match = title_matches(job["title"])
 
         location_match = location_matches(
             job["location"],
@@ -193,7 +190,7 @@ def get_matching_jobs(jobs, profile):
 def calculate_job_score(job, profile):
     reasons = []
 
-    if title_matches(job["title"], profile["preferred_roles"]):
+    if title_matches(job["title"]):
         reasons.append("Preferred role match")
 
     if location_matches(job["location"], profile["preferred_locations"]):
