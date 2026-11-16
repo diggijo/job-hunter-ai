@@ -65,6 +65,15 @@ def initialize_database():
         )
     """)
 
+
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS lever_boards (
+            board_token TEXT PRIMARY KEY,
+            company_name TEXT NOT NULL
+        )
+    """)
+
+
     connection.execute("""
         CREATE TABLE IF NOT EXISTS candidate_analysis (
             id INTEGER PRIMARY KEY,
@@ -461,6 +470,44 @@ def get_ashby_boards():
             """
             SELECT board_token, company_name
             FROM ashby_boards
+            ORDER BY board_token
+            """
+        ).fetchall()
+
+        return rows
+
+    finally:
+        connection.close()
+
+
+def add_lever_board(board_token: str, company_name: str):
+    connection = sqlite3.connect(DB_PATH)
+
+    try:
+        cursor = connection.execute(
+            """
+            INSERT OR IGNORE INTO lever_boards
+            (board_token, company_name)
+            VALUES (?, ?)
+            """,
+            (board_token, company_name),
+        )
+
+        connection.commit()
+        return cursor.rowcount > 0
+
+    finally:
+        connection.close()
+
+
+def get_lever_boards():
+    connection = sqlite3.connect(DB_PATH)
+
+    try:
+        rows = connection.execute(
+            """
+            SELECT board_token, company_name
+            FROM lever_boards
             ORDER BY board_token
             """
         ).fetchall()

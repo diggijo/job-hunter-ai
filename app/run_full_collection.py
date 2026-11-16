@@ -4,11 +4,12 @@ import time
 from pathlib import Path
 
 from app.config import BATCH_DELAY_SECONDS, BATCH_SIZE
-from app.database import get_greenhouse_boards, get_ashby_boards
+from app.database import get_greenhouse_boards, get_ashby_boards, get_lever_boards
 
 
 PROGRESS_FILE = Path("data/collection_progress.txt")
 ASHBY_PROGRESS_FILE = Path("data/ashby_collection_progress.txt")
+LEVER_PROGRESS_FILE = Path("data/lever_collection_progress.txt")
 
 
 def get_next_batch():
@@ -34,7 +35,19 @@ def save_next_ashby_batch(batch_number):
     ASHBY_PROGRESS_FILE.parent.mkdir(parents=True, exist_ok=True)
     ASHBY_PROGRESS_FILE.write_text(str(batch_number))
 
-    
+
+def get_next_lever_batch():
+    if LEVER_PROGRESS_FILE.exists():
+        return int(LEVER_PROGRESS_FILE.read_text().strip())
+
+    return 0
+
+
+def save_next_lever_batch(batch_number):
+    LEVER_PROGRESS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    LEVER_PROGRESS_FILE.write_text(str(batch_number))
+
+
 total_boards = len(get_greenhouse_boards())
 total_batches = (total_boards + BATCH_SIZE - 1) // BATCH_SIZE
 
@@ -136,3 +149,64 @@ for batch_number in range(start_ashby_batch, total_ashby_batches):
 
 print("\nAll Ashby batches completed!", flush=True)
 
+
+total_lever_boards = len(get_lever_boards())
+total_lever_batches = (
+    total_lever_boards + BATCH_SIZE - 1
+) // BATCH_SIZE
+
+print(
+    f"\nTotal Lever boards: {total_lever_boards}",
+    flush=True,
+)
+
+start_lever_batch = get_next_lever_batch()
+
+if start_lever_batch >= total_lever_batches:
+    print(
+        "Previous Lever collection completed. Starting a new cycle.",
+        flush=True,
+    )
+    start_lever_batch = 0
+    save_next_lever_batch(0)
+
+print(
+    f"Resuming Lever from batch {start_lever_batch}",
+    flush=True,
+)
+
+for batch_number in range(start_lever_batch, total_lever_batches):
+    print(
+        f"\nStarting Lever batch {batch_number + 1} "
+        f"of {total_lever_batches}...",
+        flush=True,
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "app.collect_lever_batch",
+            str(batch_number),
+        ],
+        check=False,
+    )
+
+    if result.returncode != 0:
+        print(
+            f"Lever batch {batch_number} failed. Progress not advanced.",
+            flush=True,
+        )
+        sys.exit(result.returncode)
+
+    save_next_lever_batch(batch_number + 1)
+
+    print(
+        f"Lever batch {batch_number + 1} completed.",
+        flush=True,
+    )
+
+    if batch_number < total_lever_batches - 1:
+        time.sleep(BATCH_DELAY_SECONDS)
+
+print("\nAll Lever batches completed!", flush=True)
