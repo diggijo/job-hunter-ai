@@ -185,5 +185,3 @@ def applied_jobs(request: Request):
             "preferred_locations": get_candidate_profile()["preferred_locations"]
         },
     )
-
-

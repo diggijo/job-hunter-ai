@@ -159,6 +159,42 @@ def analyse_job_match(
 
         Next, evaluate the candidate's technical suitability.
 
+        Technical skill preferences:
+
+        When assessing technical suitability, prioritize technologies
+        according to the candidate's strongest experience:
+
+        1. C# and Unity:
+           Highest priority, particularly for gameplay engineering,
+           game development, and Unity-based software roles.
+
+        2. C# and .NET:
+           High priority for general software engineering,
+           backend development, and application development.
+
+        3. C++:
+           Relevant to game development and systems programming.
+           Consider transferable programming knowledge, but do not
+           assume professional C++ experience unless explicitly
+           supported by the candidate profile.
+
+        4. Java and Python:
+           Valuable technologies, but lower priority than C# and Unity
+           when comparing otherwise similarly suitable opportunities.
+
+        Scoring rules:
+        - Give additional weight to roles that closely align with
+          the candidate's demonstrated C# and Unity experience.
+        - Prefer C# and Unity opportunities over otherwise equivalent
+          Java or Python opportunities.
+        - Do not automatically assign high scores to C# or Unity jobs
+          when the candidate lacks other important requirements.
+        - Do not unfairly penalize Java or Python opportunities
+          where the candidate is otherwise a strong match.
+        - Seniority, professional experience, and mandatory technical
+          requirements remain important.
+        - Base all assessments on evidence in the candidate profile.
+
         Consider:
         - Technical skills and technologies
         - Relevant professional and project experience
