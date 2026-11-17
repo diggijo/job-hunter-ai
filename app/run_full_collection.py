@@ -4,209 +4,113 @@ import time
 from pathlib import Path
 
 from app.config import BATCH_DELAY_SECONDS, BATCH_SIZE
-from app.database import get_greenhouse_boards, get_ashby_boards, get_lever_boards
-
-
-PROGRESS_FILE = Path("data/collection_progress.txt")
-ASHBY_PROGRESS_FILE = Path("data/ashby_collection_progress.txt")
-LEVER_PROGRESS_FILE = Path("data/lever_collection_progress.txt")
-
-
-def get_next_batch():
-    if PROGRESS_FILE.exists():
-        return int(PROGRESS_FILE.read_text().strip())
-
-    return 0
-
-
-def save_next_batch(batch_number):
-    PROGRESS_FILE.parent.mkdir(parents=True, exist_ok=True)
-    PROGRESS_FILE.write_text(str(batch_number))
-
-
-def get_next_ashby_batch():
-    if ASHBY_PROGRESS_FILE.exists():
-        return int(ASHBY_PROGRESS_FILE.read_text().strip())
-
-    return 0
-
-
-def save_next_ashby_batch(batch_number):
-    ASHBY_PROGRESS_FILE.parent.mkdir(parents=True, exist_ok=True)
-    ASHBY_PROGRESS_FILE.write_text(str(batch_number))
-
-
-def get_next_lever_batch():
-    if LEVER_PROGRESS_FILE.exists():
-        return int(LEVER_PROGRESS_FILE.read_text().strip())
-
-    return 0
-
-
-def save_next_lever_batch(batch_number):
-    LEVER_PROGRESS_FILE.parent.mkdir(parents=True, exist_ok=True)
-    LEVER_PROGRESS_FILE.write_text(str(batch_number))
-
-
-total_boards = len(get_greenhouse_boards())
-total_batches = (total_boards + BATCH_SIZE - 1) // BATCH_SIZE
-
-start_batch = get_next_batch()
-
-if start_batch >= total_batches:
-    print("Previous collection completed. Starting a new collection cycle.", flush=True)
-    start_batch = 0
-    save_next_batch(0)
-
-print(f"Total Greenhouse boards: {total_boards}", flush=True)
-print(f"Total batches: {total_batches}", flush=True)
-print(f"Resuming from batch {start_batch}", flush=True)
-
-for batch_number in range(start_batch, total_batches):
-    print(
-        f"\nStarting batch {batch_number} of {total_batches - 1}...",
-        flush=True
-    )
-
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "app.collect_greenhouse_batch",
-            str(batch_number)
-        ],
-        check=False
-    )
-
-    if result.returncode != 0:
-        print(
-            f"Batch {batch_number} failed. Progress not advanced.",
-            flush=True
-        )
-        sys.exit(result.returncode)
-
-    save_next_batch(batch_number + 1)
-
-    print(f"Batch {batch_number} completed.", flush=True)
-
-    if batch_number < total_batches - 1:
-        time.sleep(BATCH_DELAY_SECONDS)
-
-else:
-    print("\nAll Greenhouse batches completed!", flush=True)
-
-total_ashby_boards = len(get_ashby_boards())
-total_ashby_batches = (
-    total_ashby_boards + BATCH_SIZE - 1
-) // BATCH_SIZE
-
-print(
-    f"\nTotal Ashby boards: {total_ashby_boards}",
-    flush=True,
+from app.database import (
+    get_greenhouse_boards,
+    get_ashby_boards,
+    get_lever_boards,
 )
 
-start_ashby_batch = get_next_ashby_batch()
 
-if start_ashby_batch >= total_ashby_batches:
-    print("Previous Ashby collection completed. Starting a new cycle.", flush=True)
-    start_ashby_batch = 0
-    save_next_ashby_batch(0)
+PROVIDERS = {
+    "greenhouse": {
+        "get_boards": get_greenhouse_boards,
+        "progress_file": Path("data/collection_progress.txt"),
+    },
+    "ashby": {
+        "get_boards": get_ashby_boards,
+        "progress_file": Path("data/ashby_collection_progress.txt"),
+    },
+    "lever": {
+        "get_boards": get_lever_boards,
+        "progress_file": Path("data/lever_collection_progress.txt"),
+    },
+}
 
-print(f"Resuming Ashby from batch {start_ashby_batch}", flush=True)
 
-for batch_number in range(start_ashby_batch, total_ashby_batches):
-    print(
-        f"\nStarting Ashby batch {batch_number + 1} "
-        f"of {total_ashby_batches}...",
-        flush=True,
-    )
+def get_next_batch(progress_file: Path) -> int:
+    if progress_file.exists():
+        return int(progress_file.read_text().strip())
 
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "app.collect_ashby_batch",
-            str(batch_number),
-        ],
-        check=False,
-    )
+    return 0
 
-    if result.returncode != 0:
+
+def save_next_batch(progress_file: Path, batch_number: int):
+    progress_file.parent.mkdir(parents=True, exist_ok=True)
+    progress_file.write_text(str(batch_number))
+
+
+def collect_provider(provider: str, config: dict):
+    boards = config["get_boards"]()
+    progress_file = config["progress_file"]
+
+    total_boards = len(boards)
+    total_batches = (total_boards + BATCH_SIZE - 1) // BATCH_SIZE
+
+    start_batch = get_next_batch(progress_file)
+
+    if start_batch >= total_batches:
         print(
-            f"Ashby batch {batch_number} failed.",
+            f"Previous {provider.title()} collection completed. "
+            "Starting a new collection cycle.",
             flush=True,
         )
-        sys.exit(result.returncode)
-    save_next_ashby_batch(batch_number + 1)
+        start_batch = 0
+        save_next_batch(progress_file, 0)
 
-    print(
-        f"Ashby batch {batch_number + 1} completed.",
-        flush=True,
-    )
+    print(f"\nProvider: {provider.title()}", flush=True)
+    print(f"Total boards: {total_boards}", flush=True)
+    print(f"Total batches: {total_batches}", flush=True)
+    print(f"Resuming from batch {start_batch}", flush=True)
 
-    if batch_number < total_ashby_batches - 1:
-        time.sleep(BATCH_DELAY_SECONDS)
-
-print("\nAll Ashby batches completed!", flush=True)
-
-
-total_lever_boards = len(get_lever_boards())
-total_lever_batches = (
-    total_lever_boards + BATCH_SIZE - 1
-) // BATCH_SIZE
-
-print(
-    f"\nTotal Lever boards: {total_lever_boards}",
-    flush=True,
-)
-
-start_lever_batch = get_next_lever_batch()
-
-if start_lever_batch >= total_lever_batches:
-    print(
-        "Previous Lever collection completed. Starting a new cycle.",
-        flush=True,
-    )
-    start_lever_batch = 0
-    save_next_lever_batch(0)
-
-print(
-    f"Resuming Lever from batch {start_lever_batch}",
-    flush=True,
-)
-
-for batch_number in range(start_lever_batch, total_lever_batches):
-    print(
-        f"\nStarting Lever batch {batch_number + 1} "
-        f"of {total_lever_batches}...",
-        flush=True,
-    )
-
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "app.collect_lever_batch",
-            str(batch_number),
-        ],
-        check=False,
-    )
-
-    if result.returncode != 0:
+    for batch_number in range(start_batch, total_batches):
         print(
-            f"Lever batch {batch_number} failed. Progress not advanced.",
+            f"\nStarting {provider.title()} batch "
+            f"{batch_number + 1} of {total_batches}...",
             flush=True,
         )
-        sys.exit(result.returncode)
 
-    save_next_lever_batch(batch_number + 1)
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "app.collect_batches",
+                provider,
+                str(batch_number),
+            ],
+            check=False,
+        )
+
+        if result.returncode != 0:
+            print(
+                f"{provider.title()} batch {batch_number + 1} failed. "
+                "Progress not advanced.",
+                flush=True,
+            )
+            sys.exit(result.returncode)
+
+        save_next_batch(progress_file, batch_number + 1)
+
+        print(
+            f"{provider.title()} batch "
+            f"{batch_number + 1} completed.",
+            flush=True,
+        )
+
+        if batch_number < total_batches - 1:
+            time.sleep(BATCH_DELAY_SECONDS)
 
     print(
-        f"Lever batch {batch_number + 1} completed.",
+        f"\nAll {provider.title()} batches completed!",
         flush=True,
     )
 
-    if batch_number < total_lever_batches - 1:
-        time.sleep(BATCH_DELAY_SECONDS)
 
-print("\nAll Lever batches completed!", flush=True)
+def main():
+    for provider, config in PROVIDERS.items():
+        collect_provider(provider, config)
+
+    print("\nAll provider collections completed!", flush=True)
+
+
+if __name__ == "__main__":
+    main()
