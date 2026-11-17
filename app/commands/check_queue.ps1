@@ -1,5 +1,6 @@
 # Job Hunter AI - Check Retry Queue
 # Read-only: No Gemini API requests
+# .\app\commands\check_queue.ps1 
 
 $ProjectRoot = (Resolve-Path (Join-Path $PSScriptRoot "../..")).Path
 

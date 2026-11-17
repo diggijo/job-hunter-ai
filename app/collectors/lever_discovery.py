@@ -26,7 +26,6 @@ def extract_lever_token(url: str) -> str | None:
     return unquote(parts[0])
 
 
-
 def validate_lever_token(board_token: str) -> bool:
     url = f"https://api.lever.co/v0/postings/{board_token}"
 
@@ -73,7 +72,6 @@ def validate_lever_token(board_token: str) -> bool:
             return False
 
     return False
-
 
 
 def save_discovered_lever_board(

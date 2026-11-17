@@ -1,6 +1,6 @@
 from app.config import EXCLUDED_JOB_KEYWORDS, MIN_MATCH_SCORE
 from app.ai_job_evaluation import meets_experience_requirement
-from app.database import add_job, get_candidate_profile, get_jobs, initialize_database, get_job_match_analysis, get_application_statuses, save_application_status, get_application_dates
+from app.database import get_candidate_profile, get_jobs, initialize_database, get_job_match_analysis, get_application_statuses, save_application_status, get_application_dates
 from app.job_matching import get_matching_jobs
 from app.models import CandidateProfile, Job
 from fastapi import FastAPI, HTTPException, Request, Body
@@ -87,7 +87,8 @@ def home(request: Request):
         request=request,
         name="index.html",
         context={
-            "matching_jobs": matching_jobs
+            "matching_jobs": matching_jobs,
+            "preferred_locations": get_candidate_profile()["preferred_locations"]
         }
     )
 
@@ -179,7 +180,10 @@ def applied_jobs(request: Request):
     return templates.TemplateResponse(
         request=request,
         name="index.html",
-        context={"matching_jobs": applied_matches},
+        context={
+            "matching_jobs": applied_matches,
+            "preferred_locations": get_candidate_profile()["preferred_locations"]
+        },
     )
 
 

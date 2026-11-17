@@ -1,5 +1,6 @@
 # Job Hunter AI - Run Retry Queue
 # Makes Gemini API requests
+# .\app\commands\retry_queue.ps1
 
 param(
     [int]$MaxCalls = 100

@@ -179,6 +179,39 @@ def get_candidate_profile():
     }
 
 
+def update_preferred_locations(locations: list[str]):
+    connection = sqlite3.connect(DB_PATH)
+
+    try:
+        candidate = connection.execute(
+            "SELECT id FROM candidate_profile LIMIT 1"
+        ).fetchone()
+
+        if candidate is None:
+            raise ValueError("No candidate profile found")
+
+        candidate_id = candidate[0]
+
+        connection.execute(
+            "DELETE FROM preferred_locations WHERE candidate_id = ?",
+            (candidate_id,)
+        )
+
+        for location in locations:
+            connection.execute(
+                """
+                INSERT INTO preferred_locations (candidate_id, location)
+                VALUES (?, ?)
+                """,
+                (candidate_id, location.strip())
+            )
+
+        connection.commit()
+
+    finally:
+        connection.close()
+
+
 def add_job(job: Job):
     connection = sqlite3.connect(DB_PATH)
 

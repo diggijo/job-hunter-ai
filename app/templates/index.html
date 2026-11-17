@@ -31,16 +31,11 @@
 
         <select id="location-filter">
             <option value="">All Locations</option>
-            <option value="ireland">Ireland</option>
-            <option value="london">London</option>
-            <option value="new york">New York</option>
-            <option value="remote">Remote</option>
-        </select>
-
-        <select id="sort-jobs">
-            <option value="default">Default Order</option>
-            <option value="title">Job Title A-Z</option>
-            <option value="company">Company A-Z</option>
+            {% for location in preferred_locations %}
+                <option value="{{ location | lower }}">
+                    {{ location }}
+                </option>
+            {% endfor %}
         </select>
     </div>
 
