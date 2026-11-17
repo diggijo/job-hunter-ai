@@ -10,11 +10,11 @@ echo ===== Daily job collection started: %date% %time% ===== >> "logs\daily_ai.l
 ".venv\Scripts\python.exe" -m app.run_full_collection >> "logs\daily_ai.log" 2>&1
 
 if errorlevel 1 (
-    echo Greenhouse or Ashby collection failed. Skipping Gemini. >> "logs\daily_ai.log"
+    echo Job collection failed. Skipping Gemini. >> "logs\daily_ai.log"
     exit /b 1
 )
 
-echo ===== Greenhouse and Ashby collection completed: %date% %time% ===== >> "logs\daily_ai.log"
+echo ===== All provider collections completed: %date% %time% ===== >> "logs\daily_ai.log"
 echo ===== Gemini evaluation started ===== >> "logs\daily_ai.log"
 
 ".venv\Scripts\python.exe" -m app.run_daily_ai >> "logs\daily_ai.log" 2>&1
