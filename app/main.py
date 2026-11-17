@@ -1,8 +1,8 @@
 from app.config import EXCLUDED_JOB_KEYWORDS, MIN_MATCH_SCORE
 from app.ai_job_evaluation import meets_experience_requirement
 from app.database import get_candidate_profile, get_jobs, initialize_database, get_job_match_analysis, get_application_statuses, save_application_status, get_application_dates
-from app.job_matching import get_matching_jobs
-from app.models import CandidateProfile, Job
+from app.job_filters import is_technical_role, location_matches
+from app.models import CandidateProfile
 from fastapi import FastAPI, HTTPException, Request, Body
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -24,7 +24,15 @@ initialize_database()
 def home(request: Request):
     profile = get_candidate_profile()
     jobs = get_jobs()
-    matching_jobs = get_matching_jobs(jobs, profile)
+    matching_jobs = [
+        {"job": job}
+        for job in jobs
+        if is_technical_role(job["title"])
+        and location_matches(
+            job["location"],
+            profile["preferred_locations"]
+        )
+    ]
 
     today = datetime.now(ZoneInfo("Europe/Dublin")).date()
 
@@ -108,7 +116,15 @@ def list_matching_jobs():
     profile = get_candidate_profile()
     jobs = get_jobs()
 
-    matching_jobs = get_matching_jobs(jobs, profile)
+    matching_jobs = [
+        {"job": job}
+        for job in jobs
+        if is_technical_role(job["title"])
+        and location_matches(
+            job["location"],
+            profile["preferred_locations"]
+        )
+    ]
 
     return {
         "count": len(matching_jobs),

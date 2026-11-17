@@ -1,8 +1,7 @@
 from app.ai_service import analyse_job_match
 from app.config import EXCLUDED_JOB_KEYWORDS, EXPERIENCE_NUMBER_WORDS, MAX_REQUIRED_EXPERIENCE, GEMINI_MODEL, GEMINI_REQUEST_DELAY
 from app.database import *
-from app.job_filters import get_job_priority
-from app.job_matching import get_matching_jobs, location_matches
+from app.job_filters import get_job_priority, is_technical_role, location_matches
 from app.models import Job
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -84,7 +83,15 @@ def get_jobs_for_ai_analysis(limit: int = 5, candidate_id: int = 1):
     candidate = get_candidate_profile()
     jobs = get_jobs()
 
-    matches = get_matching_jobs(jobs, candidate)
+    matches = [
+        {"job": job}
+        for job in jobs
+        if is_technical_role(job["title"])
+        and location_matches(
+            job["location"],
+            candidate["preferred_locations"]
+        )
+    ]
 
     application_statuses = get_application_statuses()
 
@@ -95,9 +102,7 @@ def get_jobs_for_ai_analysis(limit: int = 5, candidate_id: int = 1):
 
     real_matches = [
         match for match in matches
-        if match["job"]["company"] != "Test Company"
-        and location_matches(match["job"]["location"], candidate["preferred_locations"])
-        and meets_experience_requirement(match["job"]["description"])
+        if meets_experience_requirement(match["job"]["description"])
         and not EXCLUDED_JOB_KEYWORDS.intersection(
             re.findall(r"[a-z]+", match["job"]["title"].lower())
         )
