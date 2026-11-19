@@ -2,8 +2,13 @@ from app.config import EXCLUDED_JOB_KEYWORDS, MIN_MATCH_SCORE
 from app.ai_job_evaluation import meets_experience_requirement
 from app.database import get_candidate_profile, get_jobs, initialize_database, get_job_match_analysis, get_application_statuses, save_application_status, get_application_dates
 from app.job_filters import is_technical_role, location_matches
-from app.models import CandidateProfile
-from fastapi import FastAPI, HTTPException, Request, Body
+from app.job_matching import (
+    extract_programming_languages,
+    extract_frameworks_tools,
+    extract_required_experience,
+    extract_key_requirements,
+)
+from fastapi import FastAPI, Request, Body
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from datetime import datetime, timezone
@@ -56,9 +61,26 @@ def home(request: Request):
 
     for match in matching_jobs:
         job = match["job"]
+
         match["application_status"] = application_statuses.get(
             job["id"],
             "not_applied"
+        )
+
+        match["programming_languages"] = extract_programming_languages(
+            job["description"]
+        )
+
+        match["frameworks_tools"] = extract_frameworks_tools(
+            job["description"]
+        )
+
+        match["required_experience"] = extract_required_experience(
+            job["description"]
+        )
+
+        match["key_requirements"] = extract_key_requirements(
+            job["description"]
         )
 
         analysis = get_job_match_analysis(1, job["id"])
@@ -101,60 +123,6 @@ def home(request: Request):
     )
 
 
-@app.get("/profile", response_model=CandidateProfile)
-def get_profile():
-    return get_candidate_profile()
-
-
-@app.get("/jobs")
-def list_jobs():
-    return get_jobs()
-
-
-@app.get("/jobs/matches")
-def list_matching_jobs():
-    profile = get_candidate_profile()
-    jobs = get_jobs()
-
-    matching_jobs = [
-        {"job": job}
-        for job in jobs
-        if is_technical_role(job["title"])
-        and location_matches(
-            job["location"],
-            profile["preferred_locations"]
-        )
-    ]
-
-    return {
-        "count": len(matching_jobs),
-        "jobs": matching_jobs
-    }
-
-
-@app.post("/jobs/{job_id}/application-status")
-def update_application_status(
-    job_id: int,
-    status: str = Body(embed=True)
-):
-    if not any(job["id"] == job_id for job in get_jobs()):
-        raise HTTPException(status_code=404, detail="Job not found")
-
-    try:
-        save_application_status(job_id, status)
-    except ValueError:
-        raise HTTPException(
-            status_code=400,
-            detail="Invalid application status"
-        )
-
-    return {
-        "job_id": job_id,
-        "status": status,
-        "saved": True
-    }
-
-
 def format_application_date(timestamp):
     if not timestamp:
         return None
@@ -184,7 +152,12 @@ def applied_jobs(request: Request):
             "score": analysis.score if analysis else None,
             "eligibility": analysis.eligibility if analysis else "not_evaluated",
             "application_status": "applied",
+            "strengths": analysis.strengths if analysis else [],
             "reasons": [],
+            "programming_languages": extract_programming_languages(job["description"]),
+            "frameworks_tools": extract_frameworks_tools(job["description"]),
+            "required_experience": extract_required_experience(job["description"]),
+            "key_requirements": extract_key_requirements(job["description"]),
             "applied_on": format_application_date(application_dates.get(job["id"])),
         })
 

@@ -109,7 +109,28 @@ def main():
     for provider, config in PROVIDERS.items():
         collect_provider(provider, config)
 
-    print("\nAll provider collections completed!", flush=True)
+    print("\nAll provider batches completed!", flush=True)
+
+    print("\nStarting failed-board retries...", flush=True)
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "app.collect_batches",
+            "--retry-failed",
+        ],
+        check=False,
+    )
+
+    if result.returncode != 0:
+        print(
+            "Failed-board retry process encountered an error.",
+            flush=True,
+        )
+        sys.exit(result.returncode)
+
+    print("\nAll collection processing finished!", flush=True)
 
 
 if __name__ == "__main__":
