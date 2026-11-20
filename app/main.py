@@ -8,7 +8,7 @@ from app.job_matching import (
     extract_required_experience,
     extract_key_requirements,
 )
-from fastapi import FastAPI, Request, Body
+from fastapi import FastAPI, HTTPException, Request, Body
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from datetime import datetime, timezone
@@ -133,6 +133,30 @@ def format_application_date(timestamp):
     irish_date = utc_date.astimezone(ZoneInfo("Europe/Dublin"))
 
     return irish_date.strftime("%d %B %Y").lstrip("0")
+
+
+
+@app.post("/jobs/{job_id}/application-status")
+def update_application_status(
+    job_id: int,
+    status: str = Body(embed=True)
+):
+    if not any(job["id"] == job_id for job in get_jobs()):
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    try:
+        save_application_status(job_id, status)
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid application status"
+        )
+
+    return {
+        "job_id": job_id,
+        "status": status,
+        "saved": True
+    }
 
 
 @app.get("/applied")

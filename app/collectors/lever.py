@@ -2,6 +2,46 @@ import time
 import httpx
 
 from app.models import Job
+from app.utils import html_to_text
+
+
+
+def build_lever_description(posting):
+    sections = []
+
+    main_description = posting.get("descriptionPlain") or ""
+
+    if not main_description.strip():
+        main_description = html_to_text(
+            posting.get("descriptionBody")
+            or posting.get("description")
+            or ""
+        )
+
+    if main_description.strip():
+        sections.append(main_description.strip())
+
+    for section in posting.get("lists") or []:
+        heading = section.get("text") or ""
+        content = html_to_text(section.get("content") or "")
+
+        if heading.strip():
+            sections.append(heading.strip())
+
+        if content.strip():
+            sections.append(content.strip())
+
+    additional = posting.get("additionalPlain") or ""
+
+    if not additional.strip():
+        additional = html_to_text(
+            posting.get("additional") or ""
+        )
+
+    if additional.strip():
+        sections.append(additional.strip())
+
+    return "\n\n".join(sections)
 
 
 def get_lever_jobs(board_name, company_name=None, title_filter=None):
@@ -69,7 +109,7 @@ def get_lever_jobs(board_name, company_name=None, title_filter=None):
             title=title,
             company=company_name or board_name,
             location=location,
-            description=posting.get("descriptionPlain") or "",
+            description=build_lever_description(posting),
             url=posting["hostedUrl"],
             source="Lever",
             source_board_id=board_name,
